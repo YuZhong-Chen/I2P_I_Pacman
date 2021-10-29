@@ -28,7 +28,7 @@ static bool pacman_movable(Pacman* pacman, Map* M, Directions targetDirec) {
 	// [HACKATHON 1-2]
 	// TODO: Determine if the current direction is movable.
 	// That is to say, your pacman shouldn't penetrate 'wall' and 'room'
-	// ,where room is reserved for ghost to set up.
+	// , where room is reserved for ghost to set up.
 	// 1) For the current direction `targetDirec`, use pre-implemented function
 	// `is_wall_block` and `is_room_block` to check if the block is wall or room. (they are both defined in map.c)
 	// 2) the coordinate data of pacman is stored in pacman->objData.Coord

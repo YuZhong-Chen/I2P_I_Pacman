@@ -28,7 +28,7 @@ void shared_init(void) {
 	menuFont = load_font("Assets/Minecraft.ttf", fontSize);
 	themeMusic = load_audio("Assets/Music/original_theme.ogg");
 	PACMAN_MOVESOUND = load_audio("Assets/Music/pacman-chomp.ogg");
-	PACMAN_DEATH_SOUND = load_audio("Assets/Music/pacman_death.wav");
+	PACMAN_DEATH_SOUND = load_audio("Assets/Music/pacman_death.ogg");
 }
 
 void shared_destroy(void) {

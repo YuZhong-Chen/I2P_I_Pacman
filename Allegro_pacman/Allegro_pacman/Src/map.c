@@ -156,7 +156,7 @@ Map* create_map(const char * filepath) {
 	for (int i = 0; i < M->row_num; i++) {
 		for (int j = 0; j < M->col_num; j++) {
 			if (filepath == NULL)
-			// [HACKATHON 1-0]
+			// [HACKATHON 0-1]
 			// You can just switch to nthu_map if you want to finish HACKATHON 0 later.
 				M->map[i][j] = default_map[i][j]; 
 			//	M->map[i][j] = nthu_map[i][j];
