@@ -2,7 +2,7 @@
 
 ## Installation
 
-Currently just clone the project and Use Visual Studio 2019 run the `.sln`
+Currently just clone the project and Use **Visual Studio 2019** run the `.sln`
 For Allegro package please install yourself
 
 - [Allegro on Visual Studio Reference](https://gamefromscratch.com/allegro-tutorial-series-part-1-getting-started/)
