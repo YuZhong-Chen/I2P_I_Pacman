@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="models">
+      <UniqueIdentifier>{ea7ba0c1-cbf4-4d22-b0ed-8094262a8ef5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\game.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\shared.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\utility.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\scene_game.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\pacman_obj.c">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\map.c">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\scene_menu.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\scene_menu_object.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ghost.c">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\scene_settings.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ghost_red_move_script.c">
+      <Filter>models</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\shared.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\scene_game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\pacman_obj.h">
+      <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\map.h">
+      <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\scene_menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\scene_menu_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ghost.h">
+      <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\scene_settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets\map_nthu.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
