@@ -10,12 +10,12 @@
 // You have to modify cage_grid_{x,y} to corressponding value also.
 // Or you can do some change while loading map (reading .txt file)
 // Make the start position metadata stored with map.txt.
-const int cage_grid_x=22, cage_grid_y=11;
+const int cage_grid_x = 22, cage_grid_y = 11;
 
 /* shared variables. */
 extern uint32_t GAME_TICK;
 extern uint32_t GAME_TICK_CD;
-extern const int block_width,  block_height;
+extern const int block_width, block_height;
 /* Internal variables */
 static const int fix_draw_pixel_offset_x = -3;
 static const int fix_draw_pixel_offset_y = -3;
@@ -130,8 +130,8 @@ void ghost_NextMove(Ghost* ghost, Directions next) {
 }
 void printGhostStatus(GhostStatus S) {
 
-	switch(S){
-	
+	switch (S) {
+
 	case BLOCKED: // stay inside the ghost room
 		game_log("BLOCKED");
 		break;
@@ -159,30 +159,24 @@ bool ghost_movable(Ghost* ghost, Map* M, Directions targetDirec, bool room) {
 	// So if you have finished (and you should), you can just "copy and paste"
 	// and do some small alternation.
 
-	/*
-	... ghost->objData.Coord.x, ... ghost->objData.Coord.y;
+	int Grid_x = ghost->objData.Coord.x, Grid_y = ghost->objData.Coord.y;
 
-	switch (targetDirect)
+	switch (targetDirec)
 	{
 	case UP:
-		...
+		return !(is_wall_block(M, Grid_x, Grid_y - 1) || (room && is_room_block(M, Grid_x, Grid_y - 1)));
 	case DOWN:
-		...
+		return !(is_wall_block(M, Grid_x, Grid_y + 1) || (room && is_room_block(M, Grid_x, Grid_y + 1)));
 	case LEFT:
-		...
+		return !(is_wall_block(M, Grid_x - 1, Grid_y) || (room && is_room_block(M, Grid_x - 1, Grid_y)));
 	case RIGHT:
-		...
+		return !(is_wall_block(M, Grid_x + 1, Grid_y) || (room && is_room_block(M, Grid_x + 1, Grid_y)));
 	default:
 		// for none UP, DOWN, LEFT, RIGHT direction u should return false.
 		return false;
 	}
 
-	if (is_wall_block(M, ..., ...) || (room && is_room_block(M, ..., ...)))
-		return false;
-	*/
-
 	return true;
-
 }
 
 void ghost_toggle_FLEE(Ghost* ghost, bool setFLEE) {
@@ -225,12 +219,12 @@ void ghost_move_script_GO_OUT(Ghost* ghost, Map* M) {
 	// Here we always assume the room of ghosts opens upward.
 	// And used a greedy method to drag ghosts out of room.
 	// You should modify here if you have different implementation/design of room.
-	if(M->map[ghost->objData.Coord.y][ghost->objData.Coord.x] == 'B') 
+	if (M->map[ghost->objData.Coord.y][ghost->objData.Coord.x] == 'B')
 		ghost_NextMove(ghost, UP);
 	else
 		ghost->status = FREEDOM;
 }
-void ghost_move_script_FLEE(Ghost* ghost, Map* M, const Pacman * const pacman) {
+void ghost_move_script_FLEE(Ghost* ghost, Map* M, const Pacman* const pacman) {
 	// [TODO]
 	Directions shortestDirection = shortest_path_direc(M, ghost->objData.Coord.x, ghost->objData.Coord.y, pacman->objData.Coord.x, pacman->objData.Coord.y);
 	// Description:
