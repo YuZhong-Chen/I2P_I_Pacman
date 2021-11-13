@@ -84,11 +84,11 @@ ALLEGRO_BITMAP* load_bitmap_resized(const char* filename, int w, int h) {
 // [HACKATHON 3-5]
 // TODO: Define bool pnt_in_rect(int px, int py, RecArea field)
 // Uncomment and fill in the code below.
-/*
+
 bool pnt_in_rect(int px, int py, RecArea field) {
-	return ???;
+	return (px >= field.x) && (px <= field.x + field.w) && (py >= field.y) && (py <= field.y + field.h);
 }
-*/
+
 
 void setRecArea(RecArea* RA, float x, float y, float w, float h) {
 	RA->x = x;

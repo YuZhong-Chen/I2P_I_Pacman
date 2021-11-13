@@ -79,8 +79,8 @@ bool bernoulliTrail(double p);
 // TODO: Declare a function.
 // Determines whether the point (px, py) is in rect (x, y, w, h).
 // Uncomment the code below.
-// bool pnt_in_rect(int px, int py, RecArea field);
+bool pnt_in_rect(int px, int py, RecArea field);
 // TODO: More functions that can be reused across different scenes.
 
-// TODO: More functions that can be reused across different scenes.
+
 #endif
