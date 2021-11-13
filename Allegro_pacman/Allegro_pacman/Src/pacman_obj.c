@@ -35,18 +35,18 @@ static bool pacman_movable(Pacman* pacman, Map* M, Directions targetDirec) {
 	// it is a self-defined pair IntInt type. Trace the code and utilize it.
 
 	
-	int x =  pacman->objData.Coord.x, y =  pacman->objData.Coord.y;
+	int Grid_x =  pacman->objData.Coord.x, Grid_y =  pacman->objData.Coord.y;
 	
 	switch (targetDirec)
 	{
 	case UP:
-		return !(is_wall_block(M, x, y - 1) || is_room_block(M, x, y - 1));
+		return !(is_wall_block(M, Grid_x, Grid_y - 1) || is_room_block(M, Grid_x, Grid_y - 1));
 	case DOWN:
-		return !(is_wall_block(M, x, y + 1) || is_room_block(M, x, y + 1));
+		return !(is_wall_block(M, Grid_x, Grid_y + 1) || is_room_block(M, Grid_x, Grid_y + 1));
 	case LEFT:
-		return !(is_wall_block(M, x - 1, y) || is_room_block(M, x - 1, y));
+		return !(is_wall_block(M, Grid_x - 1, Grid_y) || is_room_block(M, Grid_x - 1, Grid_y));
 	case RIGHT:
-		return !(is_wall_block(M, x + 1, y) || is_room_block(M, x + 1, y));
+		return !(is_wall_block(M, Grid_x + 1, Grid_y) || is_room_block(M, Grid_x + 1, Grid_y));
 	default:
 		// for none UP, DOWN, LEFT, RIGHT direction u should return false.
 		return false;

@@ -105,21 +105,20 @@ static void checkItem(void) {
 		return;
 	// [HACKATHON 1-3]
 	// TODO: check which item you are going to eat and use `pacman_eatItem` to deal with it.
-	/*
-	switch (basic_map->map...)
+	
+	switch (basic_map->map[Grid_y][Grid_x])
 	{
 	case '.':
-		pacman_eatItem(...);
+		pacman_eatItem(pman, '.');
+		basic_map->map[Grid_y][Grid_x] = ' ';
 	default:
 		break;
 	}
-	*/
+	
 	// [HACKTHON 1-4]
 	// erase the item you eat from map
-	// becareful no erasing the wall block.
-	/*
-		basic_map->map...;
-	*/
+	// be careful not to erase the wall block.
+	
 }
 static void status_update(void) {
 	for (int i = 0; i < GHOST_NUM; i++) {
