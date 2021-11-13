@@ -54,13 +54,13 @@ static void init(void) {
 	// basic_map = create_map("Assets/map_nthu.txt");
 	if (!basic_map) {
 		game_abort("error on creating map");
-	}	
+	}
 	// create pacman
 	pman = pacman_create();
 	if (!pman) {
 		game_abort("error on creating pacamn\n");
 	}
-	
+
 	// allocate ghost memory
 	// [HACKATHON 2-1]
 	// TODO: Allocate dynamic memory for ghosts array.
@@ -72,10 +72,10 @@ static void init(void) {
 		// TODO: create a ghost.
 		// Try to look the definition of ghost_create and figure out what should be placed here.
 		for (int i = 0; i < GHOST_NUM; i++) {
-			ghosts[i] = ghost_create(Blinky);  
+			ghosts[i] = ghost_create(Blinky);
 			/*
 			game_log("creating ghost %d\n", i);
-			ghosts[i] = ghost_create(Blinky);  
+			ghosts[i] = ghost_create(Blinky);
 			if (!ghosts[i])
 				game_abort("error creating ghost\n");
 			*/
@@ -87,7 +87,7 @@ static void init(void) {
 	power_up_timer = al_create_timer(1.0f); // 1 tick / sec
 	if (!power_up_timer)
 		game_abort("Error on create timer\n");
-	return ;
+	return;
 }
 
 static void step(void) {
@@ -160,7 +160,7 @@ static void update(void) {
 	checkItem();
 	status_update(pman);
 	pacman_move(pman, basic_map);
-	for (int i = 0; i < GHOST_NUM; i++) 
+	for (int i = 0; i < GHOST_NUM; i++)
 		ghosts[i]->move_script(ghosts[i], basic_map, pman);
 }
 
@@ -168,7 +168,7 @@ static void draw(void) {
 
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 
-	
+
 	//	[TODO]
 	//	Draw scoreboard, something your may need is sprinf();
 	/*
@@ -183,7 +183,7 @@ static void draw(void) {
 	// no drawing below when game over
 	for (int i = 0; i < GHOST_NUM; i++)
 		ghost_draw(ghosts[i]);
-	
+
 	//debugging mode
 	if (debug_mode) {
 		draw_hitboxes();
@@ -232,27 +232,27 @@ static void on_key_down(int key_code) {
 		// [HACKATHON 1-1]	
 		// TODO: Use allegro pre-defined enum ALLEGRO_KEY_<KEYNAME> to controll pacman movement
 		// we provided you a function `pacman_NextMove` to set the pacman's next move direction.
-		/*
-		case ALLEGRO_KEY_W:
-			pacman_NextMove(pman, ...);
-			break;
-		case ALLEGRO_KEY_A:
-			pacman_NextMove(pman, ...);
-			break;
-		case ALLEGRO_KEY_S:
-			pacman_NextMove(pman, ...);
-			break;
-		case ALLEGRO_KEY_D:
-			pacman_NextMove(pman, ...);
-			break;
-		case ALLEGRO_KEY_C:
-			cheat_mode = !cheat_mode;
-			if (cheat_mode)
-				printf("cheat mode on\n");
-			else 
-				printf("cheat mode off\n");
-			break;
-		*/
+
+	case ALLEGRO_KEY_W:
+		pacman_NextMove(pman, UP);
+		break;
+	case ALLEGRO_KEY_A:
+		pacman_NextMove(pman, LEFT);
+		break;
+	case ALLEGRO_KEY_S:
+		pacman_NextMove(pman, DOWN);
+		break;
+	case ALLEGRO_KEY_D:
+		pacman_NextMove(pman, RIGHT);
+		break;
+	case ALLEGRO_KEY_C:
+		cheat_mode = !cheat_mode;
+		if (cheat_mode)
+			printf("cheat mode on\n");
+		else
+			printf("cheat mode off\n");
+		break;
+
 	default:
 		break;
 	}
