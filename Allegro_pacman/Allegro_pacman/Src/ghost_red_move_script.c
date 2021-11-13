@@ -22,13 +22,15 @@ static void ghost_red_move_script_FREEDOM(Ghost* ghost, Map* M) {
 	static Directions proba[4]; // possible movement
 	int cnt = 0;
 	for (Directions i = 1; i <= 4; i++) {
-		game_log("%d", ghost->objData.preMove);
-		if (ghost_movable(ghost, M, i, false) && 5 - ghost->objData.preMove != i)
+		if (ghost_movable(ghost, M, i, false) && (5 - ghost->objData.preMove) != i)
 			proba[cnt++] = i;
 	}
+	if(cnt >= 1)
+		ghost_NextMove(ghost, proba[generateRandomNumber(0, cnt)]);
+	else 
+		ghost_NextMove(ghost, 5 - ghost->objData.preMove);
 
-	ghost_NextMove(ghost, proba[generateRandomNumber(0, cnt)]);
-
+	game_log("%d", ghost->objData.nextTryMove);
 
 	// [TODO]
 	// Description:
