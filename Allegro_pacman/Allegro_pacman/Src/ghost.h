@@ -30,7 +30,7 @@ typedef enum {
 } GhostType;
 
 
-typedef struct Ghost{
+typedef struct Ghost {
 	bitmapdata imgdata;
 	object objData;
 	func_ptr move_script;
@@ -56,7 +56,7 @@ void ghost_toggle_FLEE(Ghost* ghosts, bool setFLEE);
 void ghost_collided(Ghost* ghost);
 void ghost_move_script_GO_IN(Ghost* ghost, Map* M);
 void ghost_move_script_GO_OUT(Ghost* ghost, Map* M);
-void ghost_move_script_FLEE(Ghost* ghost, Map* M, const Pacman * const pacman);
+void ghost_move_script_FLEE(Ghost* ghost, Map* M, const Pacman* const pacman);
 
 void ghost_red_move_script(Ghost* ghost, Map* M, Pacman* pacman);
 #endif

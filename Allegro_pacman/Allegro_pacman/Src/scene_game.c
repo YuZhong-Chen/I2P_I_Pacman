@@ -27,7 +27,7 @@ static const int power_up_duration = 10;
 static Pacman* pman;
 static Map* basic_map;
 static Ghost** ghosts;
-bool debug_mode = false;
+bool debug_mode = true;
 bool cheat_mode = false;
 
 /* Declare static function prototypes */
@@ -221,7 +221,12 @@ static void destroy(void) {
 		[TODO]
 		free map array, Pacman and ghosts
 	*/
+
 	delete_map(basic_map);
+
+	for (int i = 0; i < GHOST_NUM; i++) {
+		ghost_destory(ghosts[i]);
+	}
 
 	return;
 }
