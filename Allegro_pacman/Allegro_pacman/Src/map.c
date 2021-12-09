@@ -188,16 +188,15 @@ Map* create_map(const char* filepath) {
 void delete_map(Map* M) {
 	if (!M)
 		return;
-	// [TODO]
+
 	// you should free the dynamic allocated part of Map* M at here;
-	/*
+
 	if (M->map) {
 		for (int i = 0; i < M->row_num; i++) {
 			free((M->map)[i]);
 		}
 		free(M->map);
 	}
-	*/
 
 	free(M);
 }
@@ -208,10 +207,8 @@ void draw_map(Map const* M) {
 		game_abort("error map!\n");
 		return;
 	}
-	/*
-		[TODO]
-		draw the map according to M->map
-	*/
+	
+	//	draw the map according to M->map
 	for (int row = 0; row < M->row_num; row++) {
 		for (int col = 0; col < M->col_num; col++) {
 			switch (M->map[row][col])
@@ -230,20 +227,6 @@ void draw_map(Map const* M) {
 			}
 		}
 	}
-	/*
-		for(...){
-			for(...)
-				switch(M->map[][])
-				{
-				case '#':
-					...
-				case '.':
-					...
-				case 'P':
-					...
-				}
-		}
-	*/
 }
 
 static void draw_block_index(Map* M, const int row, const int col) {

@@ -221,6 +221,9 @@ static void destroy(void) {
 		[TODO]
 		free map array, Pacman and ghosts
 	*/
+	delete_map(basic_map);
+
+	return;
 }
 
 static void on_key_down(int key_code) {

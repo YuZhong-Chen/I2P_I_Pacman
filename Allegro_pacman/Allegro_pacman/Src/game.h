@@ -23,7 +23,7 @@
 // If defined, logs will be shown on console and written to file.
 // If commented out, logs will not be shown nor be saved.
 #define LOG_ENABLED
-; // Question
+// Question
 // Types of function pointers.
 static ALLEGRO_EVENT_QUEUE* game_event_queue;
 typedef void(*func_ptr)(void);

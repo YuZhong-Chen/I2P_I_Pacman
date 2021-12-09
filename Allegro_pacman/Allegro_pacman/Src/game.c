@@ -67,10 +67,10 @@ void game_create() {
 	game_log("Game initialized");
 	// First scene
 	game_change_scene(scene_menu_create());
-	
-	
+
+
 	// Draw the first frame.
-	
+
 	game_draw();
 	game_log("Game start event loop");
 	// This call blocks until the game is finished.
@@ -165,7 +165,7 @@ static void game_start_event_loop(void) {
 				// The redraw timer has ticked.
 				redraws++;
 			}
-			else if(event.timer.source == game_tick_timer){
+			else if (event.timer.source == game_tick_timer) {
 				// The game tick has ticked.
 				GAME_TICK++;
 				if (GAME_TICK >= GAME_TICK_CD) {
@@ -176,7 +176,7 @@ static void game_start_event_loop(void) {
 		}
 		else if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
 			// Event for keyboard key down.
-			 game_log("Key with keycode %d down", event.keyboard.keycode);
+			game_log("Key with keycode %d down", event.keyboard.keycode);
 			key_state[event.keyboard.keycode] = true;
 			if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE && active_scene.name == "Menu") {
 				game_log("Escape clicked");
@@ -267,7 +267,7 @@ void game_change_scene(Scene next_scene) {
 		next_scene.name ? next_scene.name : "(unnamed)");
 	if (active_scene.destroy)
 		(*active_scene.destroy)();
-	if(game_tick_timer == NULL)
+	if (game_tick_timer == NULL)
 		game_abort("NULL game tick timer!!!");
 	al_stop_timer(game_tick_timer);
 	active_scene = next_scene;
