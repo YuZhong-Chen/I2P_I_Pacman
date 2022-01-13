@@ -96,8 +96,7 @@ void setRecArea(RecArea* RA, float x, float y, float w, float h) {
 	RA->w = w;
 	RA->h = h;
 }
-// Hakathon
-bool RecAreaOverlap(const RecArea RA,const RecArea RB) {
+bool RecAreaOverlap(const RecArea RA, const RecArea RB) {
 	// [TODO]
 	// Detect if two RecArea is overlapped.
 	float RA_x2 = RA.x + RA.w;
@@ -116,32 +115,32 @@ bool RecAreaOverlap(const RecArea RA,const RecArea RB) {
 RecArea getDrawArea(object obj, uint32_t TOTAL_TICK) {
 	// NOTODO
 	RecArea target;
-		
+
 	target.x = map_offset_x + obj.Coord.x * block_width;
 	target.y = map_offset_y + obj.Coord.y * block_height;
 	target.w = block_width;
 	target.h = block_height;
 
 	switch (obj.preMove) {
-		case UP:
-			target.y += (obj.moveCD) * block_width / TOTAL_TICK;
+	case UP:
+		target.y += (obj.moveCD) * block_width / TOTAL_TICK;
 		break;
-		case DOWN:
-			target.y -= (obj.moveCD) * block_width / TOTAL_TICK;
+	case DOWN:
+		target.y -= (obj.moveCD) * block_width / TOTAL_TICK;
 		break;
-		case LEFT:
-			target.x += (obj.moveCD) * block_width / TOTAL_TICK;
+	case LEFT:
+		target.x += (obj.moveCD) * block_width / TOTAL_TICK;
 		break;
-		case RIGHT:
-			target.x -= (obj.moveCD) * block_width / TOTAL_TICK;
+	case RIGHT:
+		target.x -= (obj.moveCD) * block_width / TOTAL_TICK;
 		break;
-		case NONE:
-			break;
-		default:
-			break;
+	case NONE:
+		break;
+	default:
+		break;
 	}
 
-	return target;	
+	return target;
 }
 void printRecAreaInfo(const RecArea* RA) {
 	// NOTODO
@@ -180,9 +179,9 @@ bool movetime(int speed) {
 
 uint32_t generateRandomNumber(uint32_t a, uint32_t b) {
 	// NOTODO
-	if (b < a) 
+	if (b < a)
 		game_abort("Error in RandomNumber, b is less than a");
-//	srand(time(NULL));
+	//	srand(time(NULL));
 	return rand() % (b - a + 1) + a;
 }
 double generateRandomFloat() {
@@ -193,8 +192,8 @@ double generateRandomFloat() {
 
 bool bernoulliTrail(double p) {
 	// NOTODO
-	if (p >= 1 || p <= 0) 
+	if (p >= 1 || p <= 0)
 		game_abort("Error range of p = %lf in BernoulliTrail func\n But p should be between 0.0 and 1.0", p);
 	return generateRandomFloat() < p;
-	
+
 }

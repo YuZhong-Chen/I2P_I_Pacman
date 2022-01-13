@@ -13,7 +13,7 @@
 
 // [HACKATHON 2-0]
 // Just modify the GHOST_NUM to 1
-#define GHOST_NUM 1 
+#define GHOST_NUM 1
 /* global variables*/
 extern const uint32_t GAME_TICK_CD;
 extern uint32_t GAME_TICK;
@@ -48,9 +48,6 @@ static void init(void) {
 	game_over = false;
 	game_main_Score = 0;
 	// create map
-	// basic_map = create_map(NULL);
-	// [TODO]
-	// Create map from .txt file and design your own map !!
 	basic_map = create_map("Assets/map_nthu.txt");
 	if (!basic_map) {
 		game_abort("error on creating map");
@@ -64,9 +61,12 @@ static void init(void) {
 	// allocate ghost memory
 	// [HACKATHON 2-1]
 	// TODO: Allocate dynamic memory for ghosts array.
-	
+
 	else {
 		ghosts = (Ghost**)malloc(sizeof(Ghost*) * GHOST_NUM);
+		if (!ghosts) {
+			game_abort("error on allocate ghosts' dynamic memory.\n");
+		}
 		// [HACKATHON 2-2]
 		// TODO: create a ghost.
 		// Try to look the definition of ghost_create and figure out what should be placed here.
@@ -103,7 +103,7 @@ static void checkItem(void) {
 		return;
 	// [HACKATHON 1-3]
 	// TODO: check which item you are going to eat and use `pacman_eatItem` to deal with it.
-	
+
 	switch (basic_map->map[Grid_y][Grid_x])
 	{
 	case '.':
@@ -112,33 +112,24 @@ static void checkItem(void) {
 	default:
 		break;
 	}
-	
-	// [HACKTHON 1-4]
-	// erase the item you eat from map
-	// be careful not to erase the wall block.
-	
 }
 static void status_update(void) {
 	for (int i = 0; i < GHOST_NUM; i++) {
 		if (ghosts[i]->status == GO_IN)
 			continue;
-		// [TODO]
+
 		// use `getDrawArea(..., GAME_TICK_CD)` and `RecAreaOverlap(..., GAME_TICK_CD)` functions to detect
-		// if pacman and ghosts collide with each other.
-		// And perform corresponding operations.
-		// [NOTE]
+		// if pacman and ghosts collide with each other. And perform corresponding operations.
+		// [ TODO ]
 		// You should have some branch here if you want to implement power bean mode.
-		// Uncomment Following Code
-		/*
-		if(!cheat_mode and collision of pacman and ghost)
-		{
+
+		if (!cheat_mode && RecAreaOverlap(getDrawArea(pman->objData, GAME_TICK_CD), getDrawArea(ghosts[i]->objData, GAME_TICK_CD))) {
 			game_log("collide with ghost\n");
 			al_rest(1.0);
 			pacman_die();
 			game_over = true;
 			break;
 		}
-		*/
 	}
 }
 
