@@ -6,6 +6,8 @@ static const int start_grid_x = 25, start_grid_y = 25;		// where to put pacman a
 static const int fix_draw_pixel_offset_x = -3, fix_draw_pixel_offset_y = -3;  // draw offset 
 static const int draw_region = 30;							// pacman bitmap draw region
 static ALLEGRO_SAMPLE_ID PACMAN_MOVESOUND_ID;
+static const int animate_mask = 1 << 5;
+static int animate_state = 0;
 // [ NOTE - speed ]
 // If you want to implement something regarding speed.
 // You may have to modify the basic_speed here.
@@ -25,18 +27,8 @@ extern float effect_volume;
 
 /* Declare static function */
 static bool pacman_movable(Pacman* pacman, Map* M, Directions targetDirec) {
-	// [HACKATHON 1-2]
-	// TODO: Determine if the current direction is movable.
-	// That is to say, your pacman shouldn't penetrate 'wall' and 'room'
-	// , where room is reserved for ghost to set up.
-	// 1) For the current direction `targetDirec`, use pre-implemented function
-	// `is_wall_block` and `is_room_block` to check if the block is wall or room. (they are both defined in map.c)
-	// 2) the coordinate data of pacman is stored in pacman->objData.Coord
-	// it is a self-defined pair IntInt type. Trace the code and utilize it.
+	int Grid_x = pacman->objData.Coord.x, Grid_y = pacman->objData.Coord.y;
 
-	
-	int Grid_x =  pacman->objData.Coord.x, Grid_y =  pacman->objData.Coord.y;
-	
 	switch (targetDirec)
 	{
 	case UP:
@@ -51,24 +43,15 @@ static bool pacman_movable(Pacman* pacman, Map* M, Directions targetDirec) {
 		// for none UP, DOWN, LEFT, RIGHT direction u should return false.
 		return false;
 	}
-	
+
 	return true;
 }
 
 Pacman* pacman_create() {
-
-	/*
-		[TODO]
-		Allocate dynamic memory for pman pointer;
-	*/
 	Pacman* pman = (Pacman*)malloc(sizeof(Pacman));
 	if (!pman)
 		return NULL;
-	/*
-		Pacman* pman = ...
-		if(!pman)
-			return NULL;
-	*/
+
 	/* Init pman data */
 	/* set starting point, Size, */
 	/* TODO? */
@@ -104,20 +87,8 @@ void pacman_destory(Pacman* pman) {
 
 
 void pacman_draw(Pacman* pman) {
-	/*
-		[HW-TODO ]
-		Draw Pacman and animations
-		hint: use pman->objData.moveCD to determine which frame of the animation to draw, you may refer to discription in ghost_draw in ghost.c
-	*/
 	RecArea drawArea = getDrawArea(pman->objData, GAME_TICK_CD);
 
-	//Draw default image
-	al_draw_scaled_bitmap(pman->move_sprite, 0, 0,
-		16, 16,
-		drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
-		draw_region, draw_region, 0
-	);
-	
 	int offset = 0;
 	if (game_over) {
 		/*
@@ -125,13 +96,45 @@ void pacman_draw(Pacman* pman) {
 		*/
 	}
 	else {
-		/*
-			switch(pman->objData.facing)
-			{
-			case LEFT:
-				...
-			}
-		*/
+		animate_state = (pman->objData.moveCD & animate_mask) > 0 ? 16 : 0;
+		switch (pman->objData.facing)
+		{
+		case RIGHT:
+			al_draw_scaled_bitmap(pman->move_sprite, 0 + animate_state, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
+		case LEFT:
+			al_draw_scaled_bitmap(pman->move_sprite, 32 + animate_state, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
+		case UP:
+			al_draw_scaled_bitmap(pman->move_sprite, 64 + animate_state, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
+		case DOWN:
+			al_draw_scaled_bitmap(pman->move_sprite, 96 + animate_state, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
+		default:
+			al_draw_scaled_bitmap(pman->move_sprite, 0 + animate_state, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
+		}
 	}
 }
 void pacman_move(Pacman* pacman, Map* M) {
@@ -141,9 +144,9 @@ void pacman_move(Pacman* pacman, Map* M) {
 		return;
 
 	int probe_x = pacman->objData.Coord.x, probe_y = pacman->objData.Coord.y;
-	if (pacman_movable(pacman, M, pacman->objData.nextTryMove)) 
+	if (pacman_movable(pacman, M, pacman->objData.nextTryMove))
 		pacman->objData.preMove = pacman->objData.nextTryMove;
-	else if (!pacman_movable(pacman, M, pacman->objData.preMove)) 
+	else if (!pacman_movable(pacman, M, pacman->objData.preMove))
 		return;
 
 	switch (pacman->objData.preMove)

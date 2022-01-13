@@ -78,27 +78,12 @@ void ghost_draw(Ghost* ghost) {
 	RecArea drawArea = getDrawArea(ghost->objData, GAME_TICK_CD);
 
 	//Draw default image
+	/*
 	al_draw_scaled_bitmap(ghost->move_sprite, 0, 0,
 		16, 16,
 		drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
 		draw_region, draw_region, 0
 	);
-
-	/*
-		[TODO]
-		Draw ghost according to its status
-		hint : use ghost->objData.moveCD value to determine which frame of the animation to draw.
-
-			A not so good way is:
-
-			if(ghost->objData.moveCD % 16 == 0){
-				al_draw_scaled_bitmap(...);
-			}
-			else if(ghost->objData.moveCD % 16 == 1){
-				al_draw_scaled_bitmap(...);
-			}...
-
-			since modulo operation is expensive, better avoid using it.
 	*/
 
 	int bitmap_x_offset = 0;
@@ -123,7 +108,7 @@ void ghost_draw(Ghost* ghost) {
 		case RIGHT:
 			al_draw_scaled_bitmap(ghost->move_sprite, 0 + animate_state, 0,
 				16, 16,
-				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y, 
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
 				draw_region, draw_region, 0
 			);
 			break;
@@ -157,7 +142,6 @@ void ghost_draw(Ghost* ghost) {
 			break;
 		}
 	}
-	// game_log("%d\n", ghost->objData.moveCD);
 }
 void ghost_NextMove(Ghost* ghost, Directions next) {
 	ghost->objData.nextTryMove = next;
