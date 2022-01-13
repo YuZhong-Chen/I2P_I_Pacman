@@ -20,6 +20,8 @@ extern const int block_width, block_height;
 static const int fix_draw_pixel_offset_x = -3;
 static const int fix_draw_pixel_offset_y = -3;
 static const int draw_region = 30;
+static const int animate_mask = 1 << 5;
+static int animate_state = 0;
 // [ NOTE - speed again ]
 // Again, you see this notaficationd. If you still want to implement something 
 // fancy with speed, objData->moveCD and GAME_TICK, you can first start on 
@@ -115,15 +117,47 @@ void ghost_draw(Ghost* ghost) {
 		*/
 	}
 	else {
-		/*
+		animate_state = (ghost->objData.moveCD & animate_mask) > 0 ? 16 : 0;
 		switch (ghost->objData.facing)
 		{
+		case RIGHT:
+			al_draw_scaled_bitmap(ghost->move_sprite, 0 + animate_state, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y, 
+				draw_region, draw_region, 0
+			);
+			break;
 		case LEFT:
-			...
+			al_draw_scaled_bitmap(ghost->move_sprite, 32 + animate_state, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
+		case UP:
+			al_draw_scaled_bitmap(ghost->move_sprite, 64 + animate_state, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
+		case DOWN:
+			al_draw_scaled_bitmap(ghost->move_sprite, 96 + animate_state, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
+		default:
+			al_draw_scaled_bitmap(ghost->move_sprite, 0 + animate_state, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
 		}
-		*/
 	}
-
+	// game_log("%d\n", ghost->objData.moveCD);
 }
 void ghost_NextMove(Ghost* ghost, Directions next) {
 	ghost->objData.nextTryMove = next;

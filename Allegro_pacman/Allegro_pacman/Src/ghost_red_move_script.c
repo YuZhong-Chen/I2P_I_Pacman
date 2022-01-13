@@ -16,8 +16,6 @@ static void ghost_red_move_script_FREEDOM(Ghost* ghost, Map* M) {
 	// [HACKATHON 2-4]
 	// Uncomment the following code and finish pacman picking random direction.
 
-	// ghost_NextMove(ghost, generateRandomNumber(1, 4));
-
 	static Directions proba[4]; // possible movement
 	int cnt = 0;
 	for (Directions i = 1; i <= 4; i++) {

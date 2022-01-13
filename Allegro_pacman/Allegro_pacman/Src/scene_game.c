@@ -27,7 +27,7 @@ static const int power_up_duration = 10;
 static Pacman* pman;
 static Map* basic_map;
 static Ghost** ghosts;
-bool debug_mode = true;
+bool debug_mode = false;
 bool cheat_mode = false;
 
 /* Declare static function prototypes */
