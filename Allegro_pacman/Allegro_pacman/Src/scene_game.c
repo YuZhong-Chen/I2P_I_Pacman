@@ -225,19 +225,19 @@ static void destroy(void) {
 static void on_key_down(int key_code) {
 	switch (key_code)
 	{
-		// [HACKATHON 1-1]	
-		// TODO: Use allegro pre-defined enum ALLEGRO_KEY_<KEYNAME> to controll pacman movement
-		// we provided you a function `pacman_NextMove` to set the pacman's next move direction.
-
+	case ALLEGRO_KEY_UP:
 	case ALLEGRO_KEY_W:
 		pacman_NextMove(pman, UP);
 		break;
+	case ALLEGRO_KEY_LEFT:
 	case ALLEGRO_KEY_A:
 		pacman_NextMove(pman, LEFT);
 		break;
+	case ALLEGRO_KEY_DOWN:
 	case ALLEGRO_KEY_S:
 		pacman_NextMove(pman, DOWN);
 		break;
+	case ALLEGRO_KEY_RIGHT:
 	case ALLEGRO_KEY_D:
 		pacman_NextMove(pman, RIGHT);
 		break;
@@ -248,11 +248,9 @@ static void on_key_down(int key_code) {
 		else
 			printf("cheat mode off\n");
 		break;
-
 	default:
 		break;
 	}
-
 }
 
 static void on_mouse_down(void) {

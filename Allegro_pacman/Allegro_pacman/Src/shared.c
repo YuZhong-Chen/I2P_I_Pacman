@@ -21,7 +21,6 @@ bool gameDone = false;
 	A way to accelerate is load assets once.
 	And delete them at the end.
 	This method does provide you better management of memory.
-	
 */
 void shared_init(void) {
 	

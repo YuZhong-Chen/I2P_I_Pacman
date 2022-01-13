@@ -1,4 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <string.h>
 #include <stdio.h>
 #include <allegro5/allegro_primitives.h>
@@ -86,16 +87,6 @@ const char* default_map[] = {
 
 Map* create_map(const char* filepath) {
 
-	// [HACKATHON 0]
-	// TODO: Read the map from "Assets/map_nthu.txt"
-	// ~~~~~~~~!!!!!!!!!!!!!!!!!!!!!!!!!!!~~~~~~~~~
-	// Description: So for this part, you don't have to really finish them during hackathon.
-	// You can just copy the map data in "map_nthu.txt" to the array `default_map`
-	// Or just use the array `nthu_map` in your Map Data. 
-	// But we suggest you to finish this part if you have time since this is one of 
-	// the grading part in Basic part in Final_Project_Rules.
-	/* ----------------------------- start of default map code*/
-
 	Map* M = (Map*)malloc(sizeof(Map));
 	FILE* pFile = NULL;
 	if (!M) {
@@ -106,13 +97,8 @@ Map* create_map(const char* filepath) {
 		M->row_num = 30;
 		M->col_num = 36;
 		game_log("Creating from default map. row = %d col = %d", M->row_num, M->col_num);
-
 	}
 	else {
-		// [HACKATHON 0-1]
-		// use fopen to create a file FILE* type
-		// use pFile can fscanf do reading from file just like read from command line.
-
 		game_log("%s\n", filepath);
 		pFile = fopen(filepath, "r");
 		if (!pFile) {
@@ -124,27 +110,22 @@ Map* create_map(const char* filepath) {
 			return NULL;
 		}
 		getc(pFile); // get the '\n'
-
 	}
 
-	/*
-	[TODO]
-	Allocate a 2-Dimension dynamic char array for recording Map
-	*/
 	M->map = (char**)malloc(sizeof(char*) * M->row_num);
 	if (!M->map) {
 		game_abort(stderr, "map char array malloc error\n");
 		return NULL;
 	}
 	for (int i = 0; i < M->row_num; i++) {
-		M->map[i] = (char*)malloc(sizeof(char) * (M->col_num));
+		M->map[i] = (char*)malloc(sizeof(char) * M->col_num);
 		if (!M->map[i]) {
 			game_abort(stderr, "map char array malloc error\n");
 			return NULL;
 		}
 	}
+
 	/*
-		[TODO]
 		read file to map[row][col]
 		'#' -> wall
 		'.' -> beans
@@ -156,14 +137,11 @@ Map* create_map(const char* filepath) {
 	for (int i = 0; i < M->row_num; i++) {
 		for (int j = 0; j < M->col_num; j++) {
 			if (filepath == NULL) {
-				// [HACKATHON 0-1]
-				// You can just switch to nthu_map if you want to finish HACKATHON 0 later.
 				M->map[i][j] = default_map[i][j];
 				//	M->map[i][j] = nthu_map[i][j];
 			}
 			else {
-				// [HACKATHON 0-2]
-				// read the map from file just like read from default_map
+				// read the map from file.
 				fscanf(pFile, "%c", &M->map[i][j]);
 			}
 
@@ -179,7 +157,7 @@ Map* create_map(const char* filepath) {
 			}
 		}
 		if (filepath != NULL)
-			getc(pFile);
+			getc(pFile); // get the '\n'
 	}
 	M->beansNum = M->beansCount;
 	return M;
@@ -207,7 +185,7 @@ void draw_map(Map const* M) {
 		game_abort("error map!\n");
 		return;
 	}
-	
+
 	//	draw the map according to M->map
 	for (int row = 0; row < M->row_num; row++) {
 		for (int col = 0; col < M->col_num; col++) {
@@ -294,12 +272,12 @@ static void draw_power_bean(Map* M, const int row, const int col) {
 	al_draw_filled_circle(map_offset_x + col * block_width + block_width / 2.0, map_offset_y + row * block_height + block_height / 2.0, block_width / 3.0, al_map_rgb(234, 178, 38));
 }
 
-
 bool is_wall_block(Map* M, int index_x, int index_y) {
 	if (index_x < 0 || index_x >= M->col_num || index_y < 0 || index_y >= M->row_num)
 		return true;
 	return M->map[index_y][index_x] == '#';
 }
+
 bool is_room_block(Map* M, int index_x, int index_y) {
 	if (index_x < 0 || index_x >= M->col_num || index_y < 0 || index_y >= M->row_num)
 		return true;

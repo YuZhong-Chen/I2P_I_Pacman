@@ -71,25 +71,16 @@ static void draw() {
 		"PRESS \"ENTER\""
 	);
 
-	// [HACKATHON 3-3]
-	// TODO: Draw button
-	// Uncomment and fill the code below
+	// Draw button
 	drawButton(btnSettings);
-
 }
 
 static void on_mouse_move(int a, int mouse_x, int mouse_y, int f) {
-	//	[HACKATHON 3-7]
-	//	TODO: Update button's status(hovered), and utilize the function `pnt_in_rect`, which you just implemented
-	//	Uncomment and fill the code below
+	// Update button's status(hovered), and utilize the function `pnt_in_rect`.
 	btnSettings.hovered = buttonHover(btnSettings, mouse_x, mouse_y);
 }
 
-
-//	[HACKATHON 3-8]
-//	TODO: When btnSettings clicked, switch to settings scene
-//	Uncomment and fill the code below
-
+//	When btnSettings clicked, switch to settings scene.
 static void on_mouse_down() {
 	if (btnSettings.hovered)
 		game_change_scene(scene_settings_create());
@@ -99,13 +90,10 @@ static void on_mouse_down() {
 static void destroy() {
 	stop_bgm(menuBGM);
 	al_destroy_bitmap(gameTitle);
-	//	[HACKATHON 3-10]
-	//	TODO: Destroy button images
-	//	Uncomment and fill the code below
-	
+
+	// Destroy button images
 	al_destroy_bitmap(btnSettings.default_img);
 	al_destroy_bitmap(btnSettings.hovered_img);
-	
 }
 
 static void on_key_down(int keycode) {

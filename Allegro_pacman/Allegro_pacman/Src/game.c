@@ -178,7 +178,7 @@ static void game_start_event_loop(void) {
 			// Event for keyboard key down.
 			game_log("Key with keycode %d down", event.keyboard.keycode);
 			key_state[event.keyboard.keycode] = true;
-			if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE && active_scene.name == "Menu") {
+			if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {  // only for menu ->  && active_scene.name == "Menu"
 				game_log("Escape clicked");
 				gameDone = true;
 				continue;
