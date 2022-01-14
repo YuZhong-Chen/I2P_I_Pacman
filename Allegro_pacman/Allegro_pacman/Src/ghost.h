@@ -44,7 +44,7 @@ typedef struct Ghost {
 } Ghost;
 
 Ghost* ghost_create(int flag);
-void ghost_destory(Ghost* ghost);
+void ghost_destroy(Ghost* ghost);
 void ghost_draw(Ghost* ghost);
 void ghost_NextMove(Ghost* ghost, Directions next);
 void printGhostStatus(GhostStatus);

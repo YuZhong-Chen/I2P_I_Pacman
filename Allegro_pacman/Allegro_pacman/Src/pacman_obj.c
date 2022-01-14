@@ -74,17 +74,14 @@ Pacman* pacman_create() {
 
 }
 
-void pacman_destory(Pacman* pman) {
-	/*
-		[TODO]
-		free pacman resource
-		al_destory_bitmap(pman->...);
-		al_destro_timer(pman->...);
-		...
-		free(pman);
-	*/
+void pacman_destroy(Pacman* pman) {
+	// free pacman resource
+	al_destroy_bitmap(pman->move_sprite);
+	al_destroy_bitmap(pman->die_sprite);
+	al_destroy_timer(pman->death_anim_counter);
+	
+	free(pman);
 }
-
 
 void pacman_draw(Pacman* pman) {
 	RecArea drawArea = getDrawArea(pman->objData, GAME_TICK_CD);
