@@ -89,11 +89,15 @@ void pacman_destory(Pacman* pman) {
 void pacman_draw(Pacman* pman) {
 	RecArea drawArea = getDrawArea(pman->objData, GAME_TICK_CD);
 
-	int offset = 0;
 	if (game_over) {
-		/*
-			hint: instead of using pman->objData.moveCD, use Pacman's death_anim_counter to create animation
-		*/
+		animate_state = (al_get_timer_count(pman->death_anim_counter) / 5) * 16;
+		if (animate_state > 176)
+			animate_state = 176;
+		al_draw_scaled_bitmap(pman->die_sprite, animate_state, 0,
+			16, 16,
+			drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+			draw_region, draw_region, 0
+		);
 	}
 	else {
 		animate_state = (pman->objData.moveCD & animate_mask) > 0 ? 16 : 0;

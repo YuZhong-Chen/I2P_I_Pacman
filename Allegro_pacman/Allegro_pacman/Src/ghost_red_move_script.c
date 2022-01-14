@@ -1,8 +1,10 @@
 #include "ghost.h"
 #include "pacman_obj.h"
 #include "map.h"
+
 /* Shared variables */
 #define GO_OUT_TIME 256
+
 extern uint32_t GAME_TICK_CD;
 extern uint32_t GAME_TICK;
 extern ALLEGRO_TIMER* game_tick_timer;
@@ -53,7 +55,7 @@ static void ghost_red_move_script_BLOCKED(Ghost* ghost, Map* M) {
 void ghost_red_move_script(Ghost* ghost, Map* M, Pacman* pacman) {
 	if (!movetime(ghost->speed))
 		return;
-	printGhostStatus(ghost->status);
+	// printGhostStatus(ghost->status);
 	switch (ghost->status)
 	{
 	case BLOCKED:

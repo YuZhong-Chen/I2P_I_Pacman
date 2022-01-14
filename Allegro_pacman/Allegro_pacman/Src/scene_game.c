@@ -10,9 +10,6 @@
 #include "ghost.h"
 #include "map.h"
 
-
-// [HACKATHON 2-0]
-// Just modify the GHOST_NUM to 1
 #define GHOST_NUM 1
 /* global variables*/
 extern const uint32_t GAME_TICK_CD;
@@ -67,9 +64,8 @@ static void init(void) {
 		if (!ghosts) {
 			game_abort("error on allocate ghosts' dynamic memory.\n");
 		}
-		// [HACKATHON 2-2]
-		// TODO: create a ghost.
-		// Try to look the definition of ghost_create and figure out what should be placed here.
+
+		// create a ghost.
 		for (int i = 0; i < GHOST_NUM; i++) {
 
 			game_log("creating ghost %d\n", i);
@@ -136,11 +132,15 @@ static void status_update(void) {
 static void update(void) {
 
 	if (game_over) {
-		/*
-			[TODO]
-			start pman->death_anim_counter and schedule a game-over event (e.g change scene to menu) after Pacman's death animation finished
-			game_change_scene(...);
-		*/
+		if (!al_get_timer_started(pman->death_anim_counter)) {          // start death_anim_counter
+			al_set_timer_count(pman->death_anim_counter, 0);
+			al_start_timer(pman->death_anim_counter);
+		}
+		else if (al_get_timer_count(pman->death_anim_counter) > 70) {   // Pacman's death animation finished and change scene to menu
+			al_stop_timer(pman->death_anim_counter);
+			al_rest(2.0);
+			game_change_scene(scene_menu_create());
+		}
 		return;
 	}
 
