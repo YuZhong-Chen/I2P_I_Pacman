@@ -81,43 +81,64 @@ Ghost* ghost_create(int flag) {
 	}
 	return ghost;
 }
-void ghost_destory(Ghost* ghost) {
-	/*
-		[TODO]
-		free ghost resource
-
-		al_destory_bitmap(...);
-		...
-		free(ghost);
-	*/
+void ghost_destroy(Ghost* ghost) {
+	// free ghost resource
+	al_destroy_bitmap(ghost->move_sprite);
+	al_destroy_bitmap(ghost->flee_sprite);
+	al_destroy_bitmap(ghost->dead_sprite);
+	free(ghost);
 }
 void ghost_draw(Ghost* ghost) {
 	// getDrawArea return the drawing RecArea defined by objData and GAME_TICK_CD
 	RecArea drawArea = getDrawArea(ghost->objData, GAME_TICK_CD);
 
-	//Draw default image
-	/*
-	al_draw_scaled_bitmap(ghost->move_sprite, 0, 0,
-		16, 16,
-		drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
-		draw_region, draw_region, 0
-	);
-	*/
-
-	int bitmap_x_offset = 0;
 	// [TODO] below is for animation usage, change the sprite you want to use.
 	if (ghost->status == FLEE) {
-		/*
-			al_draw_scaled_bitmap(...)
-		*/
+		al_draw_scaled_bitmap(ghost->flee_sprite, 0, 0,
+			16, 16,
+			drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+			draw_region, draw_region, 0
+		);
 	}
 	else if (ghost->status == GO_IN) {
-		/*
 		switch (ghost->objData.facing)
 		{
+		case RIGHT:
+			al_draw_scaled_bitmap(ghost->dead_sprite, 0, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
 		case LEFT:
-			...
-		*/
+			al_draw_scaled_bitmap(ghost->dead_sprite, 16, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
+		case UP:
+			al_draw_scaled_bitmap(ghost->dead_sprite, 32, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
+		case DOWN:
+			al_draw_scaled_bitmap(ghost->dead_sprite, 48, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
+		default:
+			al_draw_scaled_bitmap(ghost->dead_sprite, 0, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+			break;
+		}
 	}
 	else {
 		animate_state = (ghost->objData.moveCD & animate_mask) > 0 ? 16 : 0;
@@ -211,24 +232,23 @@ bool ghost_movable(Ghost* ghost, Map* M, Directions targetDirec, bool room) {
 }
 
 void ghost_toggle_FLEE(Ghost* ghost, bool setFLEE) {
-	// [TODO]
-	// TODO: Here is reserved for power bean implementation.
+	// Here is reserved for power bean implementation.
 	// The concept is "When pacman eats the power bean, only
 	// ghosts who are in state FREEDOM will change to state FLEE.
 	// For those who are not (BLOCK, GO_IN, etc.), they won't change state."
 	// This implementation is based on the classic PACMAN game.
-	// You are allowed to do your own implementation of power bean system.
-	/*
-		if(setFLEE){
-			if(... == FREEDOM){
-				... = FLEE;
-				... speed = ...
-			}
-		}else{
-			if(... == FLEE)
-				..
+	if (setFLEE) {
+		if (ghost->status == FREEDOM) {
+			ghost->status = FLEE;
+			ghost->speed = 1;
 		}
-	*/
+	}
+	else {
+		if (ghost->status == FLEE) {
+			ghost->status = FREEDOM;
+			ghost->speed = basic_speed;
+		}
+	}
 }
 
 void ghost_collided(Ghost* ghost) {
@@ -243,7 +263,7 @@ void ghost_move_script_GO_IN(Ghost* ghost, Map* M) {
 	// `shortest_path_direc` is a function that returns the direction of shortest path.
 	// Check `map.c` for its detail usage.
 	// For GO_IN state.
-	ghost->objData.nextTryMove = shortest_path_direc(M, ghost->objData.Coord.x, ghost->objData.Coord.y, cage_grid_x, cage_grid_y);
+	ghost_NextMove(ghost, shortest_path_direc(M, ghost->objData.Coord.x, ghost->objData.Coord.y, cage_grid_x, cage_grid_y));
 }
 void ghost_move_script_GO_OUT(Ghost* ghost, Map* M) {
 	// Description
@@ -256,7 +276,7 @@ void ghost_move_script_GO_OUT(Ghost* ghost, Map* M) {
 		ghost->status = FREEDOM;
 }
 void ghost_move_script_FLEE(Ghost* ghost, Map* M, const Pacman* const pacman) {
-	// [TODO]
+
 	Directions shortestDirection = shortest_path_direc(M, ghost->objData.Coord.x, ghost->objData.Coord.y, pacman->objData.Coord.x, pacman->objData.Coord.y);
 	// Description:
 	// The concept here is to simulate ghosts running away from pacman while pacman is having power bean ability.
@@ -264,5 +284,17 @@ void ghost_move_script_FLEE(Ghost* ghost, Map* M, const Pacman* const pacman) {
 	// Then we choose other available direction rather than direction K.
 	// In this way, ghost will escape from pacman.
 
+	// possible movement
+	Directions proba[4];
+	int cnt = 0;
+	for (Directions i = 1; i <= 4; i++) {
+		if (ghost_movable(ghost, M, i, true) && (5 - ghost->objData.preMove) != i && shortestDirection != i) {
+			proba[cnt++] = i;
+		}
+	}
+	if (cnt >= 1)
+		ghost_NextMove(ghost, proba[generateRandomNumber(0, cnt - 1)]);
+	else
+		ghost_NextMove(ghost, 5 - ghost->objData.preMove);
 }
 
