@@ -177,6 +177,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Src\ghost.c" />
+    <ClCompile Include="Src\ghost_blue_move_script.c" />
+    <ClCompile Include="Src\ghost_orange_move_script.c" />
+    <ClCompile Include="Src\ghost_pink_move_script.c" />
     <ClCompile Include="Src\ghost_red_move_script.c" />
     <ClCompile Include="Src\main.c" />
     <ClCompile Include="Src\map.c">

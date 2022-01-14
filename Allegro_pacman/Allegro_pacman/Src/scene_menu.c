@@ -124,9 +124,8 @@ Scene scene_menu_create(void) {
 	scene.destroy = &destroy;
 	scene.on_key_down = &on_key_down;
 	scene.on_mouse_move = &on_mouse_move;
-	// [HACKATHON 3-9]
-	// TODO: Register on_mouse_down.
-	// Uncomment the code below.
+
+	// Register on_mouse_down.
 	scene.on_mouse_down = &on_mouse_down;
 	// TODO: Register more event callback functions such as keyboard, mouse, ...
 	game_log("Menu scene created");

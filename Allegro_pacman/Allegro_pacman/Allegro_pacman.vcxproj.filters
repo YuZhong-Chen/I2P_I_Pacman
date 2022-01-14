@@ -54,6 +54,15 @@
     <ClCompile Include="Src\ghost_red_move_script.c">
       <Filter>models</Filter>
     </ClCompile>
+    <ClCompile Include="Src\ghost_blue_move_script.c">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ghost_pink_move_script.c">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ghost_orange_move_script.c">
+      <Filter>models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\game.h">

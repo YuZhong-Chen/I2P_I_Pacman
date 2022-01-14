@@ -10,7 +10,7 @@
 #include "ghost.h"
 #include "map.h"
 
-#define GHOST_NUM 1
+#define GHOST_NUM 4
 /* global variables*/
 extern const uint32_t GAME_TICK_CD;
 extern uint32_t GAME_TICK;
@@ -55,9 +55,7 @@ static void init(void) {
 		game_abort("error on creating pacamn\n");
 	}
 
-	// allocate ghost memory
-	// [HACKATHON 2-1]
-	// TODO: Allocate dynamic memory for ghosts array.
+	// Allocate dynamic memory for ghosts array.
 
 	else {
 		ghosts = (Ghost**)malloc(sizeof(Ghost*) * GHOST_NUM);
@@ -65,14 +63,13 @@ static void init(void) {
 			game_abort("error on allocate ghosts' dynamic memory.\n");
 		}
 
-		// create a ghost.
+		// create ghosts.
+		GhostType ghost_type = Blinky;
 		for (int i = 0; i < GHOST_NUM; i++) {
-
-			game_log("creating ghost %d\n", i);
-			ghosts[i] = ghost_create(Blinky);
+			// game_log("creating ghost %d\n", i);
+			ghosts[i] = ghost_create(ghost_type++);
 			if (!ghosts[i])
 				game_abort("error creating ghost\n");
-
 		}
 	}
 	GAME_TICK = 0;

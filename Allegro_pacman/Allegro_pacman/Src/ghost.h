@@ -59,4 +59,8 @@ void ghost_move_script_GO_OUT(Ghost* ghost, Map* M);
 void ghost_move_script_FLEE(Ghost* ghost, Map* M, const Pacman* const pacman);
 
 void ghost_red_move_script(Ghost* ghost, Map* M, Pacman* pacman);
+void ghost_pink_move_script(Ghost* ghost, Map* M, Pacman* pacman);
+void ghost_blue_move_script(Ghost* ghost, Map* M, Pacman* pacman);
+void ghost_orange_move_script(Ghost* ghost, Map* M, Pacman* pacman);
+
 #endif
