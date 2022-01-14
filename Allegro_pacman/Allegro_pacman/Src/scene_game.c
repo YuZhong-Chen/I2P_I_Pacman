@@ -101,7 +101,8 @@ static void checkItem(void) {
 	case '.':
 		pacman_eatItem(pman, '.');
 		basic_map->map[Grid_y][Grid_x] = ' ';
-		basic_map->beansCount -= 1;
+		basic_map->beansCount += 1;
+		basic_map->score += 10;
 	default:
 		break;
 	}
@@ -159,6 +160,21 @@ static void draw(void) {
 	/*
 		al_draw_text(...);
 	*/
+	al_draw_text(
+		regularFont,
+		al_map_rgb(255, 255, 255),
+		30, 25,
+		ALLEGRO_ALIGN_LEFT,
+		"Score : "
+	);
+	al_draw_textf(
+		regularFont,
+		al_map_rgb(255, 255, 255),
+		120, 25,
+		ALLEGRO_ALIGN_LEFT,
+		"%d",
+		basic_map->score
+	);
 
 	draw_map(basic_map);
 

@@ -3,6 +3,7 @@
 #include "map.h"
 
 static const int GO_OUT_TIME = 1280;
+static const int GO_OUT_BEANS = 30;
 
 extern uint32_t GAME_TICK_CD;
 extern uint32_t GAME_TICK;
@@ -59,7 +60,7 @@ void ghost_blue_move_script(Ghost* ghost, Map* M, Pacman* pacman) {
 	{
 	case BLOCKED:
 		ghost_blue_move_script_BLOCKED(ghost, M);
-		if (al_get_timer_count(game_tick_timer) > GO_OUT_TIME)
+		if (al_get_timer_count(game_tick_timer) > GO_OUT_TIME || M->beansCount > GO_OUT_BEANS)
 			ghost->status = GO_OUT;
 		break;
 	case FREEDOM:

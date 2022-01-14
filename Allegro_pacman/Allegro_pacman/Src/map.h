@@ -9,8 +9,9 @@ extern const int map_offset_x, map_offset_y ;
 typedef struct Map{
 	int row_num, col_num;
 	int wallnum;
-	int beansNum;
-	int beansCount;
+	int beansNum;       // total
+	int beansCount;     // eated
+	int score;
 	char** map;
 } Map;
 

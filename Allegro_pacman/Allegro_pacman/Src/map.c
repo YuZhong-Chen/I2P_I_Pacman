@@ -19,7 +19,7 @@ static void draw_bean(Map* M, const int row, const int col);
 static void draw_power_bean(Map* M, const int row, const int col);
 
 const char* nthu_map[] = {
-	"#####################################",
+	"####################################",
 	"#..................###.........#####",
 	"#.####.###########.....#######.....#",
 	"#.####.#...........###.....# #.###.#",
@@ -133,7 +133,7 @@ Map* create_map(const char* filepath) {
 		'P' -> Power Pellets
 	*/
 
-	M->wallnum = M->beansCount = 0;
+	M->wallnum = M->beansNum = M->beansCount = M->score = 0;
 	for (int i = 0; i < M->row_num; i++) {
 		for (int j = 0; j < M->col_num; j++) {
 			if (filepath == NULL) {
@@ -150,7 +150,7 @@ Map* create_map(const char* filepath) {
 				M->wallnum++;
 				break;
 			case '.':
-				M->beansCount++;
+				M->beansNum++;
 				break;
 			default:
 				break;
@@ -159,7 +159,6 @@ Map* create_map(const char* filepath) {
 		if (filepath != NULL)
 			getc(pFile); // get the '\n'
 	}
-	M->beansNum = M->beansCount;
 	return M;
 }
 
