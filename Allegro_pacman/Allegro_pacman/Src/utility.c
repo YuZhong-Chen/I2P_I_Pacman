@@ -81,14 +81,11 @@ ALLEGRO_BITMAP* load_bitmap_resized(const char* filename, int w, int h) {
 	return resized_bmp;
 }
 
-// [HACKATHON 3-5]
-// TODO: Define bool pnt_in_rect(int px, int py, RecArea field)
-// Uncomment and fill in the code below.
+// Define bool pnt_in_rect(int px, int py, RecArea field)
 
 bool pnt_in_rect(int px, int py, RecArea field) {
 	return (px >= field.x) && (px <= field.x + field.w) && (py >= field.y) && (py <= field.y + field.h);
 }
-
 
 void setRecArea(RecArea* RA, float x, float y, float w, float h) {
 	RA->x = x;
@@ -97,7 +94,6 @@ void setRecArea(RecArea* RA, float x, float y, float w, float h) {
 	RA->h = h;
 }
 bool RecAreaOverlap(const RecArea RA, const RecArea RB) {
-	// [TODO]
 	// Detect if two RecArea is overlapped.
 	float RA_x2 = RA.x + RA.w;
 	float RA_y2 = RA.y + RA.h;
@@ -106,11 +102,6 @@ bool RecAreaOverlap(const RecArea RA, const RecArea RB) {
 	if ((min(RA_x2, RB_x2) > max(RA.x, RB.x)) && (min(RA_y2, RB_y2) > max(RA.y, RB.y)))
 		return true;
 	return false;
-	/*
-		if(...)
-			return true;
-		return false;
-	*/
 }
 RecArea getDrawArea(object obj, uint32_t TOTAL_TICK) {
 	// NOTODO

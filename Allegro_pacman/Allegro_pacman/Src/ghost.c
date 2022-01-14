@@ -171,12 +171,7 @@ void printGhostStatus(GhostStatus S) {
 	}
 }
 bool ghost_movable(Ghost* ghost, Map* M, Directions targetDirec, bool room) {
-	// [HACKATHON 2-3]
-	// TODO: Determine if the current direction is movable.
-	// Basically, this is a ghost version of `pacman_movable`.
-	// So if you have finished (and you should), you can just "copy and paste"
-	// and do some small alternation.
-
+	// Determine if the current direction is movable.
 	int Grid_x = ghost->objData.Coord.x, Grid_y = ghost->objData.Coord.y;
 
 	switch (targetDirec)

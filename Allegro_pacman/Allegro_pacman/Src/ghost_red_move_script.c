@@ -13,13 +13,12 @@ static void ghost_red_move_script_FREEDOM(Ghost* ghost, Map* M);
 static void ghost_red_move_script_BLOCKED(Ghost* ghost, Map* M);
 
 static void ghost_red_move_script_FREEDOM(Ghost* ghost, Map* M) {
-	// [HACKATHON 2-4]
-	// Uncomment the following code and finish pacman picking random direction.
 
-	static Directions proba[4]; // possible movement
+	// possible movement
+	static Directions proba[4];
 	int cnt = 0;
 	for (Directions i = 1; i <= 4; i++) {
-		if (ghost_movable(ghost, M, i, false) && (5 - ghost->objData.preMove) != i) {
+		if (ghost_movable(ghost, M, i, true) && (5 - ghost->objData.preMove) != i) {
 			proba[cnt++] = i;
 		}
 	}
@@ -27,14 +26,6 @@ static void ghost_red_move_script_FREEDOM(Ghost* ghost, Map* M) {
 		ghost_NextMove(ghost, proba[generateRandomNumber(0, cnt - 1)]);
 	else
 		ghost_NextMove(ghost, 5 - ghost->objData.preMove);
-
-	// [TODO]
-	// Description:
-	// For red(Blinky) ghost, we ask you to implement an random strategy ghost, 
-	// which means moving in random direction.
-	// But your random strategy have to designed carefully so that ghost won't walk back and forth.
-	// (The code here DO perform walking back and forth.)
-
 }
 
 static void ghost_red_move_script_BLOCKED(Ghost* ghost, Map* M) {
@@ -62,6 +53,7 @@ static void ghost_red_move_script_BLOCKED(Ghost* ghost, Map* M) {
 void ghost_red_move_script(Ghost* ghost, Map* M, Pacman* pacman) {
 	if (!movetime(ghost->speed))
 		return;
+	printGhostStatus(ghost->status);
 	switch (ghost->status)
 	{
 	case BLOCKED:
