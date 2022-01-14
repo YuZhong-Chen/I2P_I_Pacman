@@ -94,14 +94,14 @@ static void checkItem(void) {
 	int Grid_x = pman->objData.Coord.x, Grid_y = pman->objData.Coord.y;
 	if (Grid_y >= basic_map->row_num - 1 || Grid_y <= 0 || Grid_x >= basic_map->col_num - 1 || Grid_x <= 0)
 		return;
-	// [HACKATHON 1-3]
-	// TODO: check which item you are going to eat and use `pacman_eatItem` to deal with it.
 
+	// check which item you are going to eat and use `pacman_eatItem` to deal with it.
 	switch (basic_map->map[Grid_y][Grid_x])
 	{
 	case '.':
 		pacman_eatItem(pman, '.');
 		basic_map->map[Grid_y][Grid_x] = ' ';
+		basic_map->beansCount -= 1;
 	default:
 		break;
 	}

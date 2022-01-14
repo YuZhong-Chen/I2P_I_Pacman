@@ -58,7 +58,7 @@ Ghost* ghost_create(int flag) {
 		ghost->objData.Coord.x = cage_grid_x;
 		ghost->objData.Coord.y = cage_grid_y;
 		ghost->move_sprite = load_bitmap("Assets/ghost_move_pink.png");
-		ghost->move_script = &ghost_blue_move_script;
+		ghost->move_script = &ghost_pink_move_script;
 		break;
 	case Inky:
 		ghost->objData.Coord.x = cage_grid_x;
@@ -70,7 +70,7 @@ Ghost* ghost_create(int flag) {
 		ghost->objData.Coord.x = cage_grid_x;
 		ghost->objData.Coord.y = cage_grid_y;
 		ghost->move_sprite = load_bitmap("Assets/ghost_move_orange.png");
-		ghost->move_script = &ghost_blue_move_script;
+		ghost->move_script = &ghost_orange_move_script;
 		break;
 	default:
 		ghost->objData.Coord.x = cage_grid_x;
