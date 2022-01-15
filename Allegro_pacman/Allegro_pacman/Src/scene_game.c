@@ -16,13 +16,13 @@ extern const uint32_t GAME_TICK_CD;
 extern uint32_t GAME_TICK;
 extern ALLEGRO_TIMER* game_tick_timer;
 extern ALLEGRO_SAMPLE* PACMAN_POWER_UP_SOUND;
+ALLEGRO_TIMER* power_up_timer;
+const int power_up_duration = 15;
 int game_main_Score = 0;
 bool game_over = false;
 
 /* Internal variables*/
-static ALLEGRO_TIMER* power_up_timer;
 static ALLEGRO_SAMPLE_ID PACMAN_POWER_UP_SOUND_ID;
-static const int power_up_duration = 10;
 static Pacman* pman;
 static Map* basic_map;
 static Ghost** ghosts;
@@ -124,6 +124,7 @@ static void checkItem(void) {
 static void status_update(void) {
 
 	if (al_get_timer_count(power_up_timer) > power_up_duration) {
+		al_stop_timer(power_up_timer);
 		stop_bgm(PACMAN_POWER_UP_SOUND_ID);
 		pman->powerUp = false;
 		for (int i = 0; i < GHOST_NUM; i++) {
@@ -134,11 +135,6 @@ static void status_update(void) {
 	for (int i = 0; i < GHOST_NUM; i++) {
 		if (ghosts[i]->status == GO_IN)
 			continue;
-
-		// use `getDrawArea(..., GAME_TICK_CD)` and `RecAreaOverlap(..., GAME_TICK_CD)` functions to detect
-		// if pacman and ghosts collide with each other. And perform corresponding operations.
-		// [ TODO ]
-		// You should have some branch here if you want to implement power bean mode.
 
 		if (!cheat_mode && ghosts[i]->status == FREEDOM && RecAreaOverlap(getDrawArea(pman->objData, GAME_TICK_CD), getDrawArea(ghosts[i]->objData, GAME_TICK_CD))) {
 			game_log("collide with ghost\n");

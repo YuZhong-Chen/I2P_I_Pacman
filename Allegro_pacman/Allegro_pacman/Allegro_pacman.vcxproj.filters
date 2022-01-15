@@ -63,6 +63,9 @@
     <ClCompile Include="Src\ghost_orange_move_script.c">
       <Filter>models</Filter>
     </ClCompile>
+    <ClCompile Include="Src\scene_win.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\game.h">
@@ -93,6 +96,9 @@
       <Filter>models</Filter>
     </ClInclude>
     <ClInclude Include="Src\scene_settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\scene_win.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

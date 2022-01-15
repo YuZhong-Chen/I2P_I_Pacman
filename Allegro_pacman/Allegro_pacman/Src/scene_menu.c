@@ -10,6 +10,7 @@
 #include "scene_settings.h"
 #include "scene_game.h"
 #include "scene_menu.h"
+#include "scene_win.h"
 #include "utility.h"
 #include "shared.h"
 
@@ -89,18 +90,12 @@ static void on_key_down(int keycode) {
 
 	switch (keycode) {
 	case ALLEGRO_KEY_ENTER:
-		game_change_scene(scene_main_create());
+		game_change_scene(scene_win_create());
 		break;
 	default:
 		break;
 	}
 }
-
-// TODO: Add more event callback functions such as update, ...
-
-// Functions without 'static', 'extern' prefixes is just a normal
-// function, they can be accessed by other files using 'extern'.
-// Define your normal function prototypes below.
 
 // The only function that is shared across files.
 Scene scene_menu_create(void) {

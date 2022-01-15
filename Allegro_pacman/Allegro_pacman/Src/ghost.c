@@ -16,6 +16,9 @@ const int cage_grid_x = 22, cage_grid_y = 11;
 extern uint32_t GAME_TICK;
 extern uint32_t GAME_TICK_CD;
 extern const int block_width, block_height;
+extern ALLEGRO_TIMER* power_up_timer;
+extern const int power_up_duration;
+
 /* Internal variables */
 static const int fix_draw_pixel_offset_x = -3;
 static const int fix_draw_pixel_offset_y = -3;
@@ -89,16 +92,24 @@ void ghost_destroy(Ghost* ghost) {
 	free(ghost);
 }
 void ghost_draw(Ghost* ghost) {
-	// getDrawArea return the drawing RecArea defined by objData and GAME_TICK_CD
 	RecArea drawArea = getDrawArea(ghost->objData, GAME_TICK_CD);
 
-	// [TODO] below is for animation usage, change the sprite you want to use.
 	if (ghost->status == FLEE) {
-		al_draw_scaled_bitmap(ghost->flee_sprite, 0, 0,
-			16, 16,
-			drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
-			draw_region, draw_region, 0
-		);
+		animate_state = (ghost->objData.moveCD & animate_mask) > 0 ? 16 : 0;
+		if (al_get_timer_count(power_up_timer) > 0.7 * power_up_duration && (ghost->objData.moveCD & animate_mask)) {
+			al_draw_scaled_bitmap(ghost->flee_sprite, 32 + animate_state, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+		}
+		else {
+			al_draw_scaled_bitmap(ghost->flee_sprite, 0 + animate_state, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+		}
 	}
 	else if (ghost->status == GO_IN) {
 		switch (ghost->objData.facing)
@@ -257,30 +268,17 @@ void ghost_die(Ghost* ghost) {
 }
 
 void ghost_move_script_GO_IN(Ghost* ghost, Map* M) {
-	// Description
-	// `shortest_path_direc` is a function that returns the direction of shortest path.
-	// Check `map.c` for its detail usage.
-	// For GO_IN state.
 	ghost_NextMove(ghost, shortest_path_direc(M, ghost->objData.Coord.x, ghost->objData.Coord.y, cage_grid_x, cage_grid_y));
 }
 void ghost_move_script_GO_OUT(Ghost* ghost, Map* M) {
-	// Description
-	// Here we always assume the room of ghosts opens upward.
-	// And used a greedy method to drag ghosts out of room.
-	// You should modify here if you have different implementation/design of room.
 	if (M->map[ghost->objData.Coord.y][ghost->objData.Coord.x] == 'B')
 		ghost_NextMove(ghost, UP);
 	else
 		ghost->status = FREEDOM;
 }
 void ghost_move_script_FLEE(Ghost* ghost, Map* M, const Pacman* const pacman) {
-
-	Directions shortestDirection = shortest_path_direc(M, ghost->objData.Coord.x, ghost->objData.Coord.y, pacman->objData.Coord.x, pacman->objData.Coord.y);
-	// Description:
 	// The concept here is to simulate ghosts running away from pacman while pacman is having power bean ability.
-	// To achieve this, think in this way. We first get the direction to shortest path to pacman, call it K (K is either UP, DOWN, RIGHT or LEFT).
-	// Then we choose other available direction rather than direction K.
-	// In this way, ghost will escape from pacman.
+	Directions shortestDirection = shortest_path_direc(M, ghost->objData.Coord.x, ghost->objData.Coord.y, pacman->objData.Coord.x, pacman->objData.Coord.y);
 
 	// possible movement
 	Directions proba[4];
@@ -290,9 +288,23 @@ void ghost_move_script_FLEE(Ghost* ghost, Map* M, const Pacman* const pacman) {
 			proba[cnt++] = i;
 		}
 	}
-	if (cnt >= 1)
+
+	if (cnt >= 1) {
 		ghost_NextMove(ghost, proba[generateRandomNumber(0, cnt - 1)]);
-	else
-		ghost_NextMove(ghost, 5 - ghost->objData.preMove);
+	}
+	else {
+		cnt = 0;
+		for (Directions i = 1; i <= 4; i++) {
+			if (ghost_movable(ghost, M, i, true) && (5 - ghost->objData.preMove) != i) {
+				proba[cnt++] = i;
+			}
+		}
+		if (cnt >= 1) {
+			ghost_NextMove(ghost, proba[generateRandomNumber(0, cnt - 1)]);
+		}
+		else {
+			ghost_NextMove(ghost, 5 - ghost->objData.preMove);
+		}
+	}
 }
 

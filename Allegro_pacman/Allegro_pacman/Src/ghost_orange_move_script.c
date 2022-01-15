@@ -2,7 +2,7 @@
 #include "pacman_obj.h"
 #include "map.h"
 
-static const int GO_OUT_TIME = 1792;
+static const int GO_OUT_TIME = 350;   // 1792
 
 extern uint32_t GAME_TICK_CD;
 extern uint32_t GAME_TICK;
