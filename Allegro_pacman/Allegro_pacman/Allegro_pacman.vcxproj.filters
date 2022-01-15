@@ -42,7 +42,7 @@
     <ClCompile Include="Src\scene_menu.c">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\scene_menu_object.c">
+    <ClCompile Include="Src\scene_button_object.c">
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\ghost.c">
@@ -86,7 +86,7 @@
     <ClInclude Include="Src\scene_menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\scene_menu_object.h">
+    <ClInclude Include="Src\scene_button_object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\ghost.h">

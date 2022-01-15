@@ -190,7 +190,7 @@
     <ClCompile Include="Src\game.c" />
     <ClCompile Include="Src\scene_game.c" />
     <ClCompile Include="Src\scene_menu.c" />
-    <ClCompile Include="Src\scene_menu_object.c" />
+    <ClCompile Include="Src\scene_button_object.c" />
     <ClCompile Include="Src\scene_settings.c" />
     <ClCompile Include="Src\shared.c" />
     <ClCompile Include="Src\utility.c" />
@@ -202,7 +202,7 @@
     <ClInclude Include="Src\game.h" />
     <ClInclude Include="Src\scene_game.h" />
     <ClInclude Include="Src\scene_menu.h" />
-    <ClInclude Include="Src\scene_menu_object.h" />
+    <ClInclude Include="Src\scene_button_object.h" />
     <ClInclude Include="Src\scene_settings.h" />
     <ClInclude Include="Src\shared.h" />
     <ClInclude Include="Src\utility.h" />

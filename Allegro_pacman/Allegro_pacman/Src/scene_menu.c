@@ -6,7 +6,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_native_dialog.h>
 #include <math.h>
-#include "scene_menu_object.h"
+#include "scene_button_object.h"
 #include "scene_settings.h"
 #include "scene_game.h"
 #include "scene_menu.h"
@@ -19,14 +19,6 @@ static ALLEGRO_SAMPLE_ID menuBGM;
 static int gameTitleW;
 static int gameTitleH;
 
-// [HACKATHON 3]
-// TARGET : use a clickable button to enter setting scene.
-// For `Button` struct(object) is defined in `scene_menu_object.h` and `scene_menu_object.c`
-// STRONGLY recommend you trace both of them first. 
-
-//	[HACKATHON 3-1]
-//	TODO: Declare variable for button
-//	Uncomment and fill the code below
 static Button btnSettings;
 
 static void init() {

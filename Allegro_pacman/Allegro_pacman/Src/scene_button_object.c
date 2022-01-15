@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "scene_menu_object.h"
+#include "scene_button_object.h"
 #include "utility.h"
 #include <allegro5/allegro_primitives.h>
 #include <stdlib.h>
