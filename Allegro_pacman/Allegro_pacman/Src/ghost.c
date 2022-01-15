@@ -12,7 +12,9 @@ extern uint32_t GAME_TICK;
 extern uint32_t GAME_TICK_CD;
 extern const int block_width, block_height;
 extern ALLEGRO_TIMER* power_up_timer;
+extern ALLEGRO_TIMER* freeze_timer;
 extern const int power_up_duration;
+extern const int freeze_duration;
 
 /* Internal variables */
 static const int fix_draw_pixel_offset_x = -3;
@@ -39,7 +41,8 @@ Ghost* ghost_create(int flag) {
 	ghost->status = BLOCKED;
 
 	ghost->flee_sprite = load_bitmap("Assets/ghost_flee.png");
-	ghost->dead_sprite = load_bitmap("Assets/ghost_dead.png");
+	ghost->dead_sprite = load_bitmap("Assets/ghost_dead.png"); 
+	ghost->freeze_sprite = load_bitmap("Assets/ghost_freeze.png");
 
 	switch (ghost->typeFlag) {
 	case Blinky:
@@ -49,14 +52,14 @@ Ghost* ghost_create(int flag) {
 		ghost->move_script = &ghost_red_move_script;
 		break;
 	case Pinky:
-		ghost->objData.Coord.x = cage_grid_x;
-		ghost->objData.Coord.y = cage_grid_y;
+		ghost->objData.Coord.x = cage_grid_x + 1;
+		ghost->objData.Coord.y = cage_grid_y + 1;
 		ghost->move_sprite = load_bitmap("Assets/ghost_move_pink.png");
 		ghost->move_script = &ghost_pink_move_script;
 		break;
 	case Inky:
-		ghost->objData.Coord.x = cage_grid_x;
-		ghost->objData.Coord.y = cage_grid_y;
+		ghost->objData.Coord.x = cage_grid_x - 1;
+		ghost->objData.Coord.y = cage_grid_y - 1;
 		ghost->move_sprite = load_bitmap("Assets/ghost_move_blue.png");
 		ghost->move_script = &ghost_blue_move_script;
 		break;
@@ -75,6 +78,7 @@ Ghost* ghost_create(int flag) {
 	}
 	return ghost;
 }
+
 void ghost_destroy(Ghost* ghost) {
 	// free ghost resource
 	al_destroy_bitmap(ghost->move_sprite);
@@ -82,6 +86,7 @@ void ghost_destroy(Ghost* ghost) {
 	al_destroy_bitmap(ghost->dead_sprite);
 	free(ghost);
 }
+
 void ghost_draw(Ghost* ghost) {
 	RecArea drawArea = getDrawArea(ghost->objData, GAME_TICK_CD);
 
@@ -140,6 +145,23 @@ void ghost_draw(Ghost* ghost) {
 				draw_region, draw_region, 0
 			);
 			break;
+		}
+	}
+	else if (ghost->status == FREEZE) {
+		int time = al_get_timer_count(freeze_timer);
+		if (time > 0.7 * freeze_duration && (time & (1 << 3))) {
+			al_draw_scaled_bitmap(ghost->move_sprite, 0, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
+		}
+		else {
+			al_draw_scaled_bitmap(ghost->freeze_sprite, 0, 0,
+				16, 16,
+				drawArea.x + fix_draw_pixel_offset_x, drawArea.y + fix_draw_pixel_offset_y,
+				draw_region, draw_region, 0
+			);
 		}
 	}
 	else {
@@ -206,6 +228,9 @@ void printGhostStatus(GhostStatus S) {
 	case FLEE:
 		game_log("FLEE");
 		break;
+	case FREEZE:
+		game_log("FREEZE");
+		break;
 	default:
 		game_log("status error");
 		break;
@@ -240,7 +265,7 @@ void ghost_toggle_FLEE(Ghost* ghost, bool setFLEE) {
 	// For those who are not (BLOCK, GO_IN, etc.), they won't change state."
 	// This implementation is based on the classic PACMAN game.
 	if (setFLEE) {
-		if (ghost->status == FREEDOM) {
+		if (ghost->status == FREEDOM || ghost->status == FREEZE) {
 			ghost->status = FLEE;
 			ghost->speed = 1;
 		}
@@ -249,6 +274,19 @@ void ghost_toggle_FLEE(Ghost* ghost, bool setFLEE) {
 		if (ghost->status == FLEE) {
 			ghost->status = FREEDOM;
 			ghost->speed = basic_speed;
+		}
+	}
+}
+
+void ghost_toggle_FREEZE(Ghost* ghost, bool setFREEZE) {
+	if (setFREEZE) {
+		if (ghost->status == FREEDOM) {
+			ghost->status = FREEZE;
+		}
+	}
+	else {
+		if (ghost->status == FREEZE) {
+			ghost->status = FREEDOM;
 		}
 	}
 }

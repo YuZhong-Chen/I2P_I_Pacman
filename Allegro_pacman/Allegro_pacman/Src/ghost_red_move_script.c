@@ -78,6 +78,8 @@ void ghost_red_move_script(Ghost* ghost, Map* M, Pacman* pacman) {
 	case FLEE:
 		ghost_move_script_FLEE(ghost, M, pacman);
 		break;
+	case FREEZE:
+		break;
 	default:
 		break;
 	}

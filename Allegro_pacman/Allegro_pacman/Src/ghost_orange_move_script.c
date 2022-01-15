@@ -3,7 +3,7 @@
 #include "map.h"
 #include "utility.h"
 
-static const int GO_OUT_TIME = 350;   // 1792
+static const int GO_OUT_TIME = 1792;
 static const int DISTANCE = 15;
 
 extern uint32_t GAME_TICK_CD;

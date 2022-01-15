@@ -11,8 +11,8 @@ ALLEGRO_FONT* menuFont = NULL;
 ALLEGRO_FONT* regularFont = NULL;
 int menuFontSize = 30;
 int regularFontSize = 25;
-float music_volume = 0.1;
-float effect_volume = 0.1;
+float music_volume = 0.5;
+float effect_volume = 0.5;
 bool gameDone = false;
 
 /*

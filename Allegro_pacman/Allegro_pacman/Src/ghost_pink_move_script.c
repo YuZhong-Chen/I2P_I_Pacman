@@ -2,7 +2,7 @@
 #include "pacman_obj.h"
 #include "map.h"
 
-static const int GO_OUT_TIME = 300;  // 768
+static const int GO_OUT_TIME = 768;
 static const int DISTANCE = 10;
 
 extern uint32_t GAME_TICK_CD;

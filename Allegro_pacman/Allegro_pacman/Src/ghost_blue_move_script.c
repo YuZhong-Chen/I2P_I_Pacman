@@ -2,7 +2,7 @@
 #include "pacman_obj.h"
 #include "map.h"
 
-static const int GO_OUT_TIME = 400;   // 1280
+static const int GO_OUT_TIME = 1280;
 static const int GO_OUT_BEANS = 30;
 
 extern uint32_t GAME_TICK_CD;
@@ -35,7 +35,7 @@ static void ghost_blue_move_script_BLOCKED(Ghost* ghost, Map* M) {
 			ghost_NextMove(ghost, DOWN);
 		break;
 	default:
-		ghost_NextMove(ghost, UP);
+		ghost_NextMove(ghost, DOWN);
 		break;
 	}
 }

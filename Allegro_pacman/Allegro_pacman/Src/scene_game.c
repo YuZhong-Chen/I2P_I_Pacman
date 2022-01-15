@@ -11,6 +11,7 @@
 #include "pacman_obj.h"
 #include "ghost.h"
 #include "map.h"
+#include "scene_game_object.h"
 
 #define GHOST_NUM 4
 /* global variables*/
@@ -19,7 +20,10 @@ extern uint32_t GAME_TICK;
 extern ALLEGRO_TIMER* game_tick_timer;
 extern ALLEGRO_SAMPLE* PACMAN_POWER_UP_SOUND;
 ALLEGRO_TIMER* power_up_timer;
+ALLEGRO_TIMER* freeze_timer;
 const int power_up_duration = 15;
+const int freeze_duration = 300;
+
 bool game_over = false;
 
 /* Internal variables*/
@@ -27,6 +31,7 @@ static ALLEGRO_SAMPLE_ID PACMAN_POWER_UP_SOUND_ID;
 static Pacman* pman;
 static Map* basic_map;
 static Ghost** ghosts;
+static Props Freeze_item;
 
 bool debug_mode = false;
 bool cheat_mode = false;
@@ -82,6 +87,13 @@ static void init(void) {
 	power_up_timer = al_create_timer(1.0f); // 1 tick / sec
 	if (!power_up_timer)
 		game_abort("Error on create timer\n");
+
+	freeze_timer = al_create_timer(1.0f / 64);
+	if (!freeze_timer)
+		game_abort("Error on create timer\n");
+
+	Freeze_item = props_create(700, 700, 40, 40, "Assets/ice.png");
+
 	return;
 }
 
@@ -134,6 +146,13 @@ static void status_update(void) {
 		}
 	}
 
+	if (al_get_timer_count(freeze_timer) > freeze_duration) {
+		al_stop_timer(freeze_timer);
+		for (int i = 0; i < GHOST_NUM; i++) {
+			ghost_toggle_FREEZE(ghosts[i], false);
+		}
+	}
+
 	for (int i = 0; i < GHOST_NUM; i++) {
 		if (ghosts[i]->status == GO_IN)
 			continue;
@@ -156,6 +175,7 @@ static void status_update(void) {
 static void update(void) {
 	if (game_over) {
 		if (!al_get_timer_started(pman->death_anim_counter)) {          // start death_anim_counter
+			al_stop_timer(freeze_timer);
 			al_set_timer_count(pman->death_anim_counter, 0);
 			al_start_timer(pman->death_anim_counter);
 		}
@@ -205,6 +225,9 @@ static void draw(void) {
 	draw_map(basic_map);
 
 	pacman_draw(pman);
+
+	drawProps(Freeze_item);
+
 	if (game_over)
 		return;
 	// no drawing below when game over
@@ -254,6 +277,7 @@ static void destroy(void) {
 		ghost_destroy(ghosts[i]);
 	}
 	al_destroy_timer(power_up_timer);
+	al_destroy_timer(freeze_timer);
 }
 
 static void on_key_down(int key_code) {
@@ -282,6 +306,15 @@ static void on_key_down(int key_code) {
 		else
 			printf("cheat mode off\n");
 		break;
+	case ALLEGRO_KEY_SPACE:
+		if (!Freeze_item.isUse && !pman->powerUp) {
+			Freeze_item.isUse = true;
+			al_set_timer_count(freeze_timer, 0);
+			al_start_timer(freeze_timer);
+			for (int i = 0; i < GHOST_NUM; i++) {
+				ghost_toggle_FREEZE(ghosts[i], true);
+			}
+		}
 	default:
 		break;
 	}
@@ -304,7 +337,7 @@ static void render_init_screen(void) {
 	al_draw_text(
 		menuFont,
 		al_map_rgb(255, 255, 0),
-		400, 400,
+		410, 190,
 		ALLEGRO_ALIGN_CENTER,
 		"READY!"
 	);

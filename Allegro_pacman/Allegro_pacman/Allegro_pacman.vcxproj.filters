@@ -66,6 +66,9 @@
     <ClCompile Include="Src\scene_win.c">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\scene_game_object.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\game.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\scene_win.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\scene_game_object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

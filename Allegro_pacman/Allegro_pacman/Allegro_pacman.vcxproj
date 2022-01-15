@@ -189,6 +189,7 @@
     <ClCompile Include="Src\pacman_obj.c" />
     <ClCompile Include="Src\game.c" />
     <ClCompile Include="Src\scene_game.c" />
+    <ClCompile Include="Src\scene_game_object.c" />
     <ClCompile Include="Src\scene_menu.c" />
     <ClCompile Include="Src\scene_button_object.c" />
     <ClCompile Include="Src\scene_settings.c" />
@@ -202,6 +203,7 @@
     <ClInclude Include="Src\pacman_obj.h" />
     <ClInclude Include="Src\game.h" />
     <ClInclude Include="Src\scene_game.h" />
+    <ClInclude Include="Src\scene_game_object.h" />
     <ClInclude Include="Src\scene_menu.h" />
     <ClInclude Include="Src\scene_button_object.h" />
     <ClInclude Include="Src\scene_settings.h" />

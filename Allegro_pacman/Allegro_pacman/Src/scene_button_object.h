@@ -1,5 +1,5 @@
-#ifndef MENU_OBJECT_H
-#define MENU_OBJECT_H
+#ifndef BUTTON_OBJECT_H
+#define BUTTON_OBJECT_H
 
 #include "utility.h"
 #include "shared.h"
