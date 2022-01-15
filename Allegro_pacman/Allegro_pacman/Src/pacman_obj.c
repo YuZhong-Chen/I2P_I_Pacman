@@ -52,10 +52,6 @@ Pacman* pacman_create() {
 	if (!pman)
 		return NULL;
 
-	/* Init pman data */
-	/* set starting point, Size, */
-	/* TODO? */
-	/* hint / just put it */
 	pman->objData.Coord.x = 24;
 	pman->objData.Coord.y = 24;
 	pman->objData.Size.x = block_width;
@@ -180,6 +176,9 @@ void pacman_eatItem(Pacman* pacman, const char Item) {
 	case '.':
 		stop_bgm(PACMAN_MOVESOUND_ID);
 		PACMAN_MOVESOUND_ID = play_audio(PACMAN_MOVESOUND, effect_volume);
+		break;
+	case 'P':
+		pacman->powerUp = true;
 		break;
 	default:
 		break;

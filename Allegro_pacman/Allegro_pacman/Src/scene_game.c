@@ -15,11 +15,13 @@
 extern const uint32_t GAME_TICK_CD;
 extern uint32_t GAME_TICK;
 extern ALLEGRO_TIMER* game_tick_timer;
+extern ALLEGRO_SAMPLE* PACMAN_POWER_UP_SOUND;
 int game_main_Score = 0;
 bool game_over = false;
 
 /* Internal variables*/
 static ALLEGRO_TIMER* power_up_timer;
+static ALLEGRO_SAMPLE_ID PACMAN_POWER_UP_SOUND_ID;
 static const int power_up_duration = 10;
 static Pacman* pman;
 static Map* basic_map;
@@ -103,11 +105,32 @@ static void checkItem(void) {
 		basic_map->map[Grid_y][Grid_x] = ' ';
 		basic_map->beansCount += 1;
 		basic_map->score += 10;
+		break;
+	case 'P':
+		pacman_eatItem(pman, 'P');
+		basic_map->map[Grid_y][Grid_x] = ' ';
+		al_set_timer_count(power_up_timer, 0);
+		al_start_timer(power_up_timer);
+		stop_bgm(PACMAN_POWER_UP_SOUND_ID);
+		PACMAN_POWER_UP_SOUND_ID = play_audio(PACMAN_POWER_UP_SOUND, music_volume);
+		for (int i = 0; i < GHOST_NUM; i++) {
+			ghost_toggle_FLEE(ghosts[i], true);
+		}
+		break;
 	default:
 		break;
 	}
 }
 static void status_update(void) {
+
+	if (al_get_timer_count(power_up_timer) > power_up_duration) {
+		stop_bgm(PACMAN_POWER_UP_SOUND_ID);
+		pman->powerUp = false;
+		for (int i = 0; i < GHOST_NUM; i++) {
+			ghost_toggle_FLEE(ghosts[i], false);
+		}
+	}
+
 	for (int i = 0; i < GHOST_NUM; i++) {
 		if (ghosts[i]->status == GO_IN)
 			continue;
@@ -119,10 +142,14 @@ static void status_update(void) {
 
 		if (!cheat_mode && ghosts[i]->status == FREEDOM && RecAreaOverlap(getDrawArea(pman->objData, GAME_TICK_CD), getDrawArea(ghosts[i]->objData, GAME_TICK_CD))) {
 			game_log("collide with ghost\n");
+			stop_bgm(PACMAN_POWER_UP_SOUND_ID);
 			al_rest(1.0);
 			pacman_die();
 			game_over = true;
 			break;
+		}
+		else if (ghosts[i]->status == FLEE && RecAreaOverlap(getDrawArea(pman->objData, GAME_TICK_CD), getDrawArea(ghosts[i]->objData, GAME_TICK_CD))) {
+			ghost_die(ghosts[i]);
 		}
 	}
 }
@@ -144,7 +171,7 @@ static void update(void) {
 
 	step();
 	checkItem();
-	status_update(pman);
+	status_update();
 	pacman_move(pman, basic_map);
 	for (int i = 0; i < GHOST_NUM; i++)
 		ghosts[i]->move_script(ghosts[i], basic_map, pman);
@@ -154,12 +181,6 @@ static void draw(void) {
 
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 
-
-	//	[TODO]
-	//	Draw scoreboard, something your may need is sprinf();
-	/*
-		al_draw_text(...);
-	*/
 	al_draw_text(
 		regularFont,
 		al_map_rgb(255, 255, 255),
@@ -227,6 +248,7 @@ static void destroy(void) {
 	for (int i = 0; i < GHOST_NUM; i++) {
 		ghost_destroy(ghosts[i]);
 	}
+	al_destroy_timer(power_up_timer);
 }
 
 static void on_key_down(int key_code) {

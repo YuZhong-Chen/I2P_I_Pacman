@@ -251,11 +251,9 @@ void ghost_toggle_FLEE(Ghost* ghost, bool setFLEE) {
 	}
 }
 
-void ghost_collided(Ghost* ghost) {
-	if (ghost->status == FLEE) {
-		ghost->status = GO_IN;
-		ghost->speed = 4;
-	}
+void ghost_die(Ghost* ghost) {
+	ghost->status = GO_IN;
+	ghost->speed = 4;
 }
 
 void ghost_move_script_GO_IN(Ghost* ghost, Map* M) {

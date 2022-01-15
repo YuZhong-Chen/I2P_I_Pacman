@@ -23,9 +23,6 @@ static Button btnSettings;
 
 static void init() {
 
-	// [HACKATHON 3-2]
-	// TODO: Create button to settings
-	//	Uncomment and fill the code below
 	btnSettings = button_create(730, 20, 50, 50, "Assets/settings.png", "Assets/settings2.png");
 
 	gameTitle = load_bitmap("Assets/title.png");
