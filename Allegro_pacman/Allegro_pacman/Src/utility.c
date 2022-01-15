@@ -1,6 +1,7 @@
 #include "utility.h"
 #include "game.h"
 #include <stdlib.h>
+#include <math.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_audio.h>
@@ -184,4 +185,8 @@ bool bernoulliTrail(double p) {
 		game_abort("Error range of p = %lf in BernoulliTrail func\n But p should be between 0.0 and 1.0", p);
 	return generateRandomFloat() < p;
 
+}
+
+int getDistance(object *a, object *b) {
+	return (int)sqrt(pow(a->Coord.x - b->Coord.x, 2) + pow(a->Coord.y - b->Coord.y, 2));
 }

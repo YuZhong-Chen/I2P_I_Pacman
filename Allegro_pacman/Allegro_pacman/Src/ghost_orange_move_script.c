@@ -1,8 +1,10 @@
 #include "ghost.h"
 #include "pacman_obj.h"
 #include "map.h"
+#include "utility.h"
 
 static const int GO_OUT_TIME = 350;   // 1792
+static const int DISTANCE = 15;
 
 extern uint32_t GAME_TICK_CD;
 extern uint32_t GAME_TICK;
@@ -14,7 +16,27 @@ static void ghost_orange_move_script_FREEDOM(Ghost* ghost, Pacman* pman, Map* M)
 static void ghost_orange_move_script_BLOCKED(Ghost* ghost, Map* M);
 
 static void ghost_orange_move_script_FREEDOM(Ghost* ghost, Pacman* pman, Map* M) {
-	ghost_NextMove(ghost, shortest_path_direc(M, ghost->objData.Coord.x, ghost->objData.Coord.y, pman->objData.Coord.x, pman->objData.Coord.y));
+
+	if (getDistance(ghost, pman) > DISTANCE) {
+		Directions shortestDirection = shortest_path_direc(M, ghost->objData.Coord.x, ghost->objData.Coord.y, pman->objData.Coord.x, pman->objData.Coord.y);
+		if (ghost_movable(ghost, M, shortestDirection, true) && (5 - ghost->objData.preMove) != shortestDirection) {
+			ghost_NextMove(ghost, shortestDirection);
+			return;
+		}
+	}
+
+	// possible movement
+	static Directions proba[4];
+	int cnt = 0;
+	for (Directions i = 1; i <= 4; i++) {
+		if (ghost_movable(ghost, M, i, true) && (5 - ghost->objData.preMove) != i) {
+			proba[cnt++] = i;
+		}
+	}
+	if (cnt >= 1)
+		ghost_NextMove(ghost, proba[generateRandomNumber(0, cnt - 1)]);
+	else
+		ghost_NextMove(ghost, 5 - ghost->objData.preMove);
 }
 
 static void ghost_orange_move_script_BLOCKED(Ghost* ghost, Map* M) {

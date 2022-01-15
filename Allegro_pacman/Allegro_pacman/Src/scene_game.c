@@ -148,6 +148,7 @@ static void status_update(void) {
 		}
 		else if (ghosts[i]->status == FLEE && RecAreaOverlap(getDrawArea(pman->objData, GAME_TICK_CD), getDrawArea(ghosts[i]->objData, GAME_TICK_CD))) {
 			ghost_die(ghosts[i]);
+			basic_map->score += 100;
 		}
 	}
 }

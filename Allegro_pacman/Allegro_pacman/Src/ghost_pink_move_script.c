@@ -3,6 +3,7 @@
 #include "map.h"
 
 static const int GO_OUT_TIME = 300;  // 768
+static const int DISTANCE = 10;
 
 extern uint32_t GAME_TICK_CD;
 extern uint32_t GAME_TICK;
@@ -10,10 +11,18 @@ extern ALLEGRO_TIMER* game_tick_timer;
 extern const int cage_grid_x, cage_grid_y;
 
 /* Declare static function prototypes */
-static void ghost_pink_move_script_FREEDOM(Ghost* ghost, Map* M);
+static void ghost_pink_move_script_FREEDOM(Ghost* ghost, Pacman* pman, Map* M);
 static void ghost_pink_move_script_BLOCKED(Ghost* ghost, Map* M);
 
-static void ghost_pink_move_script_FREEDOM(Ghost* ghost, Map* M) {
+static void ghost_pink_move_script_FREEDOM(Ghost* ghost, Pacman* pman, Map* M) {
+
+	if (getDistance(ghost, pman) < DISTANCE) {
+		Directions shortestDirection = shortest_path_direc(M, ghost->objData.Coord.x, ghost->objData.Coord.y, pman->objData.Coord.x, pman->objData.Coord.y);
+		if (ghost_movable(ghost, M, shortestDirection, true) && (5 - ghost->objData.preMove) != shortestDirection) {
+			ghost_NextMove(ghost, shortestDirection);
+			return;
+		}
+	}
 
 	// possible movement
 	static Directions proba[4];
@@ -63,7 +72,7 @@ void ghost_pink_move_script(Ghost* ghost, Map* M, Pacman* pacman) {
 			ghost->status = GO_OUT;
 		break;
 	case FREEDOM:
-		ghost_pink_move_script_FREEDOM(ghost, M);
+		ghost_pink_move_script_FREEDOM(ghost, pacman, M);
 		break;
 	case GO_OUT:
 		ghost_move_script_GO_OUT(ghost, M);

@@ -28,14 +28,14 @@ ALLEGRO_FONT* load_font(const char* filename, int size);
 ALLEGRO_BITMAP* load_bitmap(const char* filename);
 // Load resized bitmap and check if failed.
 ALLEGRO_BITMAP* load_bitmap_resized(const char* filename, int w, int h);
-typedef struct RecArea{
+typedef struct RecArea {
 	float x, y, w, h;
 } RecArea;
 typedef struct Pair_IntInt {
 	int x;
 	int y;
 } Pair_IntInt;
-typedef enum Directions{
+typedef enum Directions {
 	NONE = 0,
 	UP = 1,
 	LEFT = 2,
@@ -57,7 +57,7 @@ typedef struct object {
 	uint32_t moveCD;				// movement CountDown
 } object;
 
-typedef struct bitmapdata{
+typedef struct bitmapdata {
 	int bitmap_x;
 	int bitmap_y;
 	int bitmap_w;
@@ -68,7 +68,7 @@ typedef struct bitmapdata{
 
 void setRecArea(RecArea* RA, float x, float y, float w, float h);
 RecArea getDrawArea(object obj, uint32_t TICK);
-bool RecAreaOverlap(const RecArea RA,const RecArea RB);
+bool RecAreaOverlap(const RecArea RA, const RecArea RB);
 void printRecAreaInfo(const RecArea* RA);
 void printDirection(const Directions a);
 bool movetime(int speed);
@@ -80,7 +80,8 @@ bool bernoulliTrail(double p);
 // Determines whether the point (px, py) is in rect (x, y, w, h).
 // Uncomment the code below.
 bool pnt_in_rect(int px, int py, RecArea field);
-// TODO: More functions that can be reused across different scenes.
+
+int getDistance(object* a, object* b);
 
 
 #endif
