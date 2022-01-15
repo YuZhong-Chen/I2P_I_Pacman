@@ -2,18 +2,6 @@
 // [game.h]
 // declare shared variables and allegro5 related routines.
 
-// Extern variables are "declare without defining". When
-// a variable is defined, the compiler allocates memory for that
-// variable and possibly also initializes its contents to some value.
-// The declaration informs the compiler that a variable by that name
-// and type exists, but the compiler does not need to allocate memory
-// for it since it is allocated elsewhere.
-
-// Variables and functions with 'static' prefix at the top level of a
-// source file is only accessible in that file ("file scope", also
-// known as "internal linkage"). If other files has the same variable
-// name, they'll be different variables.
-
 #ifndef GAME_H
 #define GAME_H
 #define _CRT_SECURE_NO_DEPRECATE
@@ -23,8 +11,7 @@
 // If defined, logs will be shown on console and written to file.
 // If commented out, logs will not be shown nor be saved.
 #define LOG_ENABLED
-// Question
-// Types of function pointers.
+
 static ALLEGRO_EVENT_QUEUE* game_event_queue;
 typedef void(*func_ptr)(void);
 typedef void(*func_ptr_keyboard)(int keycode);

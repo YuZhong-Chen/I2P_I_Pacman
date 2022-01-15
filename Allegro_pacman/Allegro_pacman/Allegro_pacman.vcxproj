@@ -210,7 +210,7 @@
     <ClInclude Include="Src\utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Assets\map_nthu.txt" />
+    <Text Include="Assets\map_pacman.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

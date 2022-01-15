@@ -18,7 +18,6 @@ typedef struct Map Map;
 
 typedef struct Pacman{
 
-	bitmapdata imgdata;
 	object objData;
 	func_ptr move;
 	int speed;

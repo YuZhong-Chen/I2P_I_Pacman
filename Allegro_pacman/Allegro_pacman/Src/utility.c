@@ -1,24 +1,21 @@
-// [utility.c]
-// you should implement the utility functions defined in the header.
-
 #include "utility.h"
 #include "game.h"
 #include <stdlib.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_audio.h>
+
 extern uint32_t GAME_TICK, GAME_TICK_CD;
-const int GridSize = 22;
-float VOLUME = 1.0;
 extern map_offset_x;
 extern map_offset_y;
 extern block_width, block_height;
+
 ALLEGRO_SAMPLE* load_audio(const char* filename) {
 	ALLEGRO_SAMPLE* sample = al_load_sample(filename);
 	if (!sample)
 		game_abort("failed to load audio: %s", filename);
 	else
-		game_log("loaded audio: %s", filename);
+		// game_log("loaded audio: %s", filename);
 	return sample;
 }
 
@@ -48,7 +45,7 @@ ALLEGRO_FONT* load_font(const char* filename, int size) {
 	if (!font)
 		game_abort("failed to load font: %s with size %d", filename, size);
 	else
-		game_log("loaded font: %s with size %d", filename, size);
+		// game_log("loaded font: %s with size %d", filename, size);
 	return font;
 }
 
@@ -57,7 +54,7 @@ ALLEGRO_BITMAP* load_bitmap(const char* filename) {
 	if (!bmp)
 		game_abort("failed to load image: %s", filename);
 	else
-		game_log("loaded image: %s", filename);
+		// game_log("loaded image: %s", filename);
 	return bmp;
 }
 

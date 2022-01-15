@@ -11,8 +11,6 @@
 // TODO: More shared resources or data that needed to be accessed
 // across different scenes. initialize the value in 'shared.c'.;
 
-extern ALLEGRO_FONT* font_pirulen_32;
-extern ALLEGRO_FONT* font_pirulen_24;
 extern ALLEGRO_SAMPLE* themeMusic;
 extern ALLEGRO_SAMPLE* PACMAN_MOVESOUND;
 extern ALLEGRO_SAMPLE* PACMAN_DEATH_SOUND;

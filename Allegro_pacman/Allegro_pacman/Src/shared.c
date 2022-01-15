@@ -1,13 +1,7 @@
-// [shared.c]
-// you should define the shared variable declared in the header here.
-
 #include "shared.h"
 #include "utility.h"
 #include "game.h"
-// #include "scene_menu.h"
 
-ALLEGRO_FONT* font_pirulen_32;
-ALLEGRO_FONT* font_pirulen_24;
 ALLEGRO_SAMPLE* themeMusic = NULL;
 ALLEGRO_SAMPLE* PACMAN_MOVESOUND = NULL;
 ALLEGRO_SAMPLE* PACMAN_DEATH_SOUND = NULL;

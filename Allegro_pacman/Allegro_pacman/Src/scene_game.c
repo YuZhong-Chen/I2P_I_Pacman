@@ -7,6 +7,7 @@
 #include "scene_game.h"
 #include "scene_menu.h"
 #include "scene_win.h"
+#include "scene_settings.h"
 #include "pacman_obj.h"
 #include "ghost.h"
 #include "map.h"
@@ -19,7 +20,6 @@ extern ALLEGRO_TIMER* game_tick_timer;
 extern ALLEGRO_SAMPLE* PACMAN_POWER_UP_SOUND;
 ALLEGRO_TIMER* power_up_timer;
 const int power_up_duration = 15;
-int game_main_Score = 0;
 bool game_over = false;
 
 /* Internal variables*/
@@ -27,6 +27,7 @@ static ALLEGRO_SAMPLE_ID PACMAN_POWER_UP_SOUND_ID;
 static Pacman* pman;
 static Map* basic_map;
 static Ghost** ghosts;
+
 bool debug_mode = false;
 bool cheat_mode = false;
 
@@ -46,9 +47,9 @@ static void draw_hitboxes(void);
 
 static void init(void) {
 	game_over = false;
-	game_main_Score = 0;
+
 	// create map
-	basic_map = create_map("Assets/map_nthu.txt");
+	basic_map = create_map("Assets/map_pacman.txt");
 	if (!basic_map) {
 		game_abort("error on creating map");
 	}
@@ -152,7 +153,6 @@ static void status_update(void) {
 }
 
 static void update(void) {
-
 	if (game_over) {
 		if (!al_get_timer_started(pman->death_anim_counter)) {          // start death_anim_counter
 			al_set_timer_count(pman->death_anim_counter, 0);
@@ -166,8 +166,9 @@ static void update(void) {
 		return;
 	}
 
-	if (basic_map->beansNum == basic_map->beansCount /*basic_map->beansCount > 5*/) {
+	if (basic_map->beansNum == basic_map->beansCount /* basic_map->beansCount > 5 */) {
 		stop_bgm(PACMAN_POWER_UP_SOUND_ID);
+		al_rest(1.0);
 		game_change_scene(scene_win_create());
 		return;
 	}

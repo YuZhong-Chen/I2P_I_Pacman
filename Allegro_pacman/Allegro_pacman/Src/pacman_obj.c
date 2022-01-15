@@ -8,13 +8,7 @@ static const int draw_region = 30;							// pacman bitmap draw region
 static ALLEGRO_SAMPLE_ID PACMAN_MOVESOUND_ID;
 static const int animate_mask = 1 << 5;
 static int animate_state = 0;
-// [ NOTE - speed ]
-// If you want to implement something regarding speed.
-// You may have to modify the basic_speed here.
-// But before you modify this, make sure you are 
-// totally understand the meaning of speed and function
-// `step()` in `scene_game.c`, also the relationship between
-// `speed`, `GAME_TICK`, `GAME_TICK_CD`, `objData->moveCD`.
+
 static const int basic_speed = 2;
 
 /* Shared variables */

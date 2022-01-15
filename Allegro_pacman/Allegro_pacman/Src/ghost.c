@@ -5,11 +5,6 @@
 #include "pacman_obj.h"
 
 /* global variables*/
-// [ NOTE ]
-// if you change the map .txt to your own design.
-// You have to modify cage_grid_{x,y} to corressponding value also.
-// Or you can do some change while loading map (reading .txt file)
-// Make the start position metadata stored with map.txt.
 const int cage_grid_x = 30, cage_grid_y = 11;
 
 /* shared variables. */
@@ -25,11 +20,7 @@ static const int fix_draw_pixel_offset_y = -3;
 static const int draw_region = 30;
 static const int animate_mask = 1 << 5;
 static int animate_state = 0;
-// [ NOTE - speed again ]
-// Again, you see this notaficationd. If you still want to implement something 
-// fancy with speed, objData->moveCD and GAME_TICK, you can first start on 
-// working on animation of ghosts and pacman. // Once you finished the animation 
-// part, you will have more understanding on whole mechanism.
+
 static const int basic_speed = 2;
 
 Ghost* ghost_create(int flag) {

@@ -11,7 +11,7 @@
 // [ NOTE ]
 const int block_width = 21, block_height = 21;			// the pixel size of a "block"
 const int map_offset_x = 25, map_offset_y = 50;			// pixel offset of where to start draw map
-const int four_probe[4][2] = { { 1, 0 }, { 0, 1 }, { -1,0 }, { 0, -1 } };
+const int four_probe[4][2] = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
 
 /* Declare static function prototypes. */
 static void draw_block_index(Map* M, int row, int col);
@@ -159,6 +159,8 @@ Map* create_map(const char* filepath) {
 		if (filepath != NULL)
 			getc(pFile); // get the '\n'
 	}
+
+	fclose(pFile);
 	return M;
 }
 
@@ -166,8 +168,7 @@ void delete_map(Map* M) {
 	if (!M)
 		return;
 
-	// you should free the dynamic allocated part of Map* M at here;
-
+	// free the dynamic allocated part of Map* M at here;
 	if (M->map) {
 		for (int i = 0; i < M->row_num; i++) {
 			free((M->map)[i]);
