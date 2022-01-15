@@ -2,7 +2,7 @@
 #include "pacman_obj.h"
 #include "map.h"
 /* Static variables */
-static const int start_grid_x = 25, start_grid_y = 25;		// where to put pacman at the beginning
+static const int start_grid_x = 18, start_grid_y = 17;		// where to put pacman at the beginning
 static const int fix_draw_pixel_offset_x = -3, fix_draw_pixel_offset_y = -3;  // draw offset 
 static const int draw_region = 30;							// pacman bitmap draw region
 static ALLEGRO_SAMPLE_ID PACMAN_MOVESOUND_ID;
@@ -52,8 +52,8 @@ Pacman* pacman_create() {
 	if (!pman)
 		return NULL;
 
-	pman->objData.Coord.x = 24;
-	pman->objData.Coord.y = 24;
+	pman->objData.Coord.x = start_grid_x;
+	pman->objData.Coord.y = start_grid_y;
 	pman->objData.Size.x = block_width;
 	pman->objData.Size.y = block_height;
 

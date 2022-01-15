@@ -10,7 +10,7 @@
 // You have to modify cage_grid_{x,y} to corressponding value also.
 // Or you can do some change while loading map (reading .txt file)
 // Make the start position metadata stored with map.txt.
-const int cage_grid_x = 22, cage_grid_y = 11;
+const int cage_grid_x = 30, cage_grid_y = 11;
 
 /* shared variables. */
 extern uint32_t GAME_TICK;
