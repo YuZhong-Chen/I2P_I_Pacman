@@ -6,6 +6,7 @@
 #include "utility.h"
 #include "scene_game.h"
 #include "scene_menu.h"
+#include "scene_win.h"
 #include "pacman_obj.h"
 #include "ghost.h"
 #include "map.h"
@@ -162,6 +163,12 @@ static void update(void) {
 			al_rest(2.0);
 			game_change_scene(scene_menu_create());
 		}
+		return;
+	}
+
+	if (basic_map->beansNum == basic_map->beansCount /*basic_map->beansCount > 5*/) {
+		stop_bgm(PACMAN_POWER_UP_SOUND_ID);
+		game_change_scene(scene_win_create());
 		return;
 	}
 

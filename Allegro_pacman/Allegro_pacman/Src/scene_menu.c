@@ -90,7 +90,7 @@ static void on_key_down(int keycode) {
 
 	switch (keycode) {
 	case ALLEGRO_KEY_ENTER:
-		game_change_scene(scene_win_create());
+		game_change_scene(scene_main_create());
 		break;
 	default:
 		break;

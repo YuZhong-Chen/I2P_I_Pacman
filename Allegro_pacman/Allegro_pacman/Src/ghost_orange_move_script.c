@@ -10,23 +10,11 @@ extern ALLEGRO_TIMER* game_tick_timer;
 extern const int cage_grid_x, cage_grid_y;
 
 /* Declare static function prototypes */
-static void ghost_orange_move_script_FREEDOM(Ghost* ghost, Map* M);
+static void ghost_orange_move_script_FREEDOM(Ghost* ghost, Pacman* pman, Map* M);
 static void ghost_orange_move_script_BLOCKED(Ghost* ghost, Map* M);
 
-static void ghost_orange_move_script_FREEDOM(Ghost* ghost, Map* M) {
-
-	// possible movement
-	static Directions proba[4];
-	int cnt = 0;
-	for (Directions i = 1; i <= 4; i++) {
-		if (ghost_movable(ghost, M, i, true) && (5 - ghost->objData.preMove) != i) {
-			proba[cnt++] = i;
-		}
-	}
-	if (cnt >= 1)
-		ghost_NextMove(ghost, proba[generateRandomNumber(0, cnt - 1)]);
-	else
-		ghost_NextMove(ghost, 5 - ghost->objData.preMove);
+static void ghost_orange_move_script_FREEDOM(Ghost* ghost, Pacman* pman, Map* M) {
+	ghost_NextMove(ghost, shortest_path_direc(M, ghost->objData.Coord.x, ghost->objData.Coord.y, pman->objData.Coord.x, pman->objData.Coord.y));
 }
 
 static void ghost_orange_move_script_BLOCKED(Ghost* ghost, Map* M) {
@@ -63,7 +51,7 @@ void ghost_orange_move_script(Ghost* ghost, Map* M, Pacman* pacman) {
 			ghost->status = GO_OUT;
 		break;
 	case FREEDOM:
-		ghost_orange_move_script_FREEDOM(ghost, M);
+		ghost_orange_move_script_FREEDOM(ghost, pacman, M);
 		break;
 	case GO_OUT:
 		ghost_move_script_GO_OUT(ghost, M);
