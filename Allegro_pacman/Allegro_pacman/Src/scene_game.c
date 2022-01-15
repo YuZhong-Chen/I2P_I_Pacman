@@ -157,7 +157,7 @@ static void status_update(void) {
 		if (ghosts[i]->status == GO_IN)
 			continue;
 
-		if (!cheat_mode && ghosts[i]->status == FREEDOM && RecAreaOverlap(getDrawArea(pman->objData, GAME_TICK_CD), getDrawArea(ghosts[i]->objData, GAME_TICK_CD))) {
+		if (!cheat_mode && (ghosts[i]->status == FREEDOM || ghosts[i]->status == FREEZE) && RecAreaOverlap(getDrawArea(pman->objData, GAME_TICK_CD), getDrawArea(ghosts[i]->objData, GAME_TICK_CD))) {
 			game_log("collide with ghost\n");
 			stop_bgm(PACMAN_POWER_UP_SOUND_ID);
 			al_rest(1.0);
