@@ -21,8 +21,10 @@ extern ALLEGRO_TIMER* game_tick_timer;
 extern ALLEGRO_SAMPLE* PACMAN_POWER_UP_SOUND;
 ALLEGRO_TIMER* power_up_timer;
 ALLEGRO_TIMER* freeze_timer;
+ALLEGRO_TIMER* speed_up_timer;
 const int power_up_duration = 15;
 const int freeze_duration = 300;
+const int speed_up_duration = 300;
 
 bool game_over = false;
 
@@ -32,6 +34,8 @@ static Pacman* pman;
 static Map* basic_map;
 static Ghost** ghosts;
 static Props Freeze_item;
+static Props SpeedUp_item;
+static const int SpeedUp_speed = 4;
 
 bool debug_mode = false;
 bool cheat_mode = false;
@@ -92,7 +96,12 @@ static void init(void) {
 	if (!freeze_timer)
 		game_abort("Error on create timer\n");
 
+	speed_up_timer = al_create_timer(1.0f / 64);
+	if (!speed_up_timer)
+		game_abort("Error on create timer\n");
+
 	Freeze_item = props_create(700, 700, 40, 40, "Assets/ice.png");
+	SpeedUp_item = props_create(650, 700, 40, 40, "Assets/speedup.png");
 
 	return;
 }
@@ -153,6 +162,11 @@ static void status_update(void) {
 		}
 	}
 
+	if (al_get_timer_count(speed_up_timer) > speed_up_duration) {
+		al_stop_timer(speed_up_timer);
+		pman->speed = pman->basic_speed;
+	}
+
 	for (int i = 0; i < GHOST_NUM; i++) {
 		if (ghosts[i]->status == GO_IN)
 			continue;
@@ -173,6 +187,7 @@ static void status_update(void) {
 }
 
 static void update(void) {
+
 	if (game_over) {
 		if (!al_get_timer_started(pman->death_anim_counter)) {          // start death_anim_counter
 			al_stop_timer(freeze_timer);
@@ -227,6 +242,26 @@ static void draw(void) {
 	pacman_draw(pman);
 
 	drawProps(Freeze_item);
+	if (!Freeze_item.isUse) {
+		al_draw_text(
+			menuFont,
+			al_map_rgb(255, 255, 255),
+			722, 755,
+			ALLEGRO_ALIGN_CENTER,
+			"K"
+		);
+	}
+
+	drawProps(SpeedUp_item);
+	if (!SpeedUp_item.isUse) {
+		al_draw_text(
+			menuFont,
+			al_map_rgb(255, 255, 255),
+			671, 755,
+			ALLEGRO_ALIGN_CENTER,
+			"J"
+		);
+	}
 
 	if (game_over)
 		return;
@@ -278,6 +313,10 @@ static void destroy(void) {
 	}
 	al_destroy_timer(power_up_timer);
 	al_destroy_timer(freeze_timer);
+	al_destroy_timer(speed_up_timer);
+
+	al_destroy_bitmap(Freeze_item.img);
+	al_destroy_bitmap(SpeedUp_item.img);
 }
 
 static void on_key_down(int key_code) {
@@ -306,7 +345,15 @@ static void on_key_down(int key_code) {
 		else
 			printf("cheat mode off\n");
 		break;
-	case ALLEGRO_KEY_SPACE:
+	case ALLEGRO_KEY_J:
+		if (!SpeedUp_item.isUse) {
+			SpeedUp_item.isUse = true;
+			al_set_timer_count(speed_up_timer, 0);
+			al_start_timer(speed_up_timer);
+			pman->speed = SpeedUp_speed;
+		}
+		break;
+	case ALLEGRO_KEY_K:
 		if (!Freeze_item.isUse && !pman->powerUp) {
 			Freeze_item.isUse = true;
 			al_set_timer_count(freeze_timer, 0);

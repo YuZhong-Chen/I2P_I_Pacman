@@ -21,6 +21,7 @@ typedef struct Pacman{
 	object objData;
 	func_ptr move;
 	int speed;
+	int basic_speed;
 	bool powerUp;
 	ALLEGRO_TIMER* death_anim_counter;
 	ALLEGRO_BITMAP* move_sprite;

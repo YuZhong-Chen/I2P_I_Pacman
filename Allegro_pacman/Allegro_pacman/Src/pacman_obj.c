@@ -54,6 +54,7 @@ Pacman* pacman_create() {
 	pman->objData.preMove = NONE;
 	pman->objData.nextTryMove = NONE;
 	pman->speed = basic_speed;
+	pman->basic_speed = basic_speed;
 
 	pman->death_anim_counter = al_create_timer(1.0f / 64);
 	pman->powerUp = false;
